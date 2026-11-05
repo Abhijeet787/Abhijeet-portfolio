@@ -1,0 +1,34 @@
+# macOS system files
+.DS_Store
+
+# Archive bundles (saves 635+ MB of redundant zip files)
+*.zip
+
+# Legacy unreferenced folders (active assets are in project_creatives/ and PCI creatives2/)
+Alarm of Dome(Halloween)/
+Alarm of Dome1/
+Alarm of Dome2/
+Alarm of Dome4/
+Alarm of Dome5/
+Alarm of Dome6/
+Alarm of Dome7zip/
+Alarm of Dome8/
+
+# Netlify dist bundle (duplicate of root assets)
+dist/
+__MACOSX/
+
+# Kalacurry agency website — kept on this computer, will become its own project later
+kalacurry-website (later)/
+
+# Working/reference files not used by the live site
+Group 36320.jpg
+Group 36439.jpg
+UIUX logo.jpg
+Video edits logo.jpg
+funtroo logo.jpg
+deck ref.png
+floating oriject details.pdf
+floating projects details.pdf
+scratch_carousels_catalog.json
+scratch_extracted_pdf.txt
