@@ -19,7 +19,7 @@
   <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Patrick+Hand&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -96,7 +96,6 @@
       max-width: 90%;
       line-height: 1.4;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      transition: opacity 0.12s ease;
     }
 
     .progress-bar-container {
@@ -843,13 +842,98 @@
     }
 
     /* Floating Desktop Controls styling */
+    /* ---------------------------------------------------- */
+    /* NIGHT SHIFT — spotlight on the nightlife & festival work */
+    /* ---------------------------------------------------- */
+    .night-shift-toggle {
+      position: fixed;
+      top: 14px;
+      right: 18px;
+      z-index: 9000;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px 7px 11px;
+      font: 600 12px/1 var(--font-sans);
+      color: #1d1d1f;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(10px) saturate(170%);
+      -webkit-backdrop-filter: blur(10px) saturate(170%);
+      border: none;
+      border-radius: 999px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+        0 0 0 1px rgba(0, 0, 0, 0.14),
+        0 4px 16px rgba(0, 0, 0, 0.14);
+      cursor: pointer;
+      transition: background 0.4s ease, color 0.4s ease, transform 0.15s ease;
+    }
+    .night-shift-toggle:hover { transform: translateY(-1px); }
+    .night-shift-toggle:active { transform: scale(0.97); }
+    .night-shift-toggle:focus-visible { outline: 2px solid #0a84ff; outline-offset: 2px; }
+    .night-shift-toggle .ns-icon { font-size: 14px; line-height: 1; }
+    body.night-shift .night-shift-toggle {
+      color: #ffe6b3;
+      background: rgba(30, 22, 48, 0.55);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 220, 160, 0.35),
+        0 0 18px rgba(255, 170, 90, 0.25);
+    }
+
+    .lights-out {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9500; /* over everything except the boot screen */
+    }
+
+    .night-shift-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5; /* above both wallpaper layers (z 1 and 2) */
+      pointer-events: none;
+      opacity: 0;
+      background:
+        radial-gradient(ellipse at 70% 20%, rgba(120, 60, 160, 0.35), transparent 60%),
+        radial-gradient(ellipse at 20% 85%, rgba(255, 120, 60, 0.18), transparent 55%),
+        rgba(8, 6, 18, 0.86);
+      transition: opacity 0.7s ease;
+    }
+    body.night-shift .night-shift-overlay { opacity: 1; }
+    body.ns-instant .night-shift-overlay,
+    body.ns-instant .project-badge { transition: none !important; }
+
+    .project-badge {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, filter 0.6s ease;
+    }
+    body.night-shift .project-badge:not(.night-work) {
+      opacity: 0.12;
+      filter: grayscale(1) blur(0.5px);
+    }
+    body.night-shift .project-badge.night-work .thumbnail-wrapper {
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 10px 28px rgba(255, 110, 70, 0.32),
+        0 0 22px rgba(150, 90, 255, 0.28);
+    }
+    body.night-shift .project-badge.night-work { z-index: 25; }
+
+    @media (max-width: 768px) {
+      .night-shift-toggle { top: 10px; right: 10px; padding: 6px 11px 6px 9px; font-size: 11px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .night-shift-overlay, .project-badge { transition: none; }
+    }
+
     /* Handwritten sticky note on the desktop */
     .desktop-sticky {
       position: absolute;
       top: 72px;
       left: 3%;
-      width: 196px;
-      padding: 16px 16px 18px;
+      width: 157px;
+      padding: 13px 13px 14px;
       background: linear-gradient(180deg, #fff59a 0%, #fdee7c 100%);
       border-radius: 2px;
       box-shadow:
@@ -865,11 +949,11 @@
       /* a strip of tape */
       content: '';
       position: absolute;
-      top: -9px;
+      top: -7px;
       left: 50%;
-      width: 64px;
-      height: 18px;
-      margin-left: -32px;
+      width: 51px;
+      height: 14px;
+      margin-left: -26px;
       background: rgba(255, 255, 255, 0.55);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
       transform: rotate(3deg);
@@ -877,10 +961,10 @@
     .desktop-sticky:active { cursor: grabbing; }
     .desktop-sticky p {
       margin: 0;
-      font-family: 'Caveat', 'Bradley Hand', cursive;
-      font-size: 21px;
-      font-weight: 600;
-      line-height: 1.12;
+      font-family: 'Patrick Hand', 'Bradley Hand', cursive;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.25;
       color: #2b2410;
     }
     @keyframes stickyIn {
@@ -2328,6 +2412,9 @@
         font-size: 6.5px !important;
         letter-spacing: 0.4px;
         color: #ffffff !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
 
       /* Fixed left-side vertical dock container (bychudy.com style) */
@@ -3134,7 +3221,7 @@
 
   <!-- 1. APPLE BOOT SCREEN -->
   <div id="boot-screen">
-    <p class="boot-quote" id="boot-quote-text">Waking up the desktop…</p>
+    <p class="boot-quote" id="boot-quote-text">Loud ideas. Quiet details.</p>
     <div class="progress-bar-container">
       <div class="progress-bar-fill" id="boot-progress"></div>
     </div>
@@ -3148,6 +3235,7 @@
       <div class="bg-portrait-glass-overlay"></div>
     </div>
     <div class="background-overlay-grid"></div>
+    <div class="night-shift-overlay" aria-hidden="true"></div>
   </div>
 
   <!-- 3. TOP MAC MENU BAR -->
@@ -3197,6 +3285,14 @@
 
   <!-- 4. DESKTOP CONTAINER (WITH BADGES & WINDOWS) -->
   <!-- 4. DESKTOP CONTAINER (WITH BADGES & WINDOWS) -->
+  <!-- Full-screen black used for the Night Shift "lights out" moment -->
+  <div class="lights-out" id="lights-out" aria-hidden="true"></div>
+
+  <!-- Night Shift: shows only the nightlife, festival and music work -->
+  <button class="night-shift-toggle" id="night-shift-toggle" type="button" aria-pressed="false" onclick="toggleNightShift()">
+    <span class="ns-icon" aria-hidden="true">☾</span><span class="ns-label">Night Shift</span>
+  </button>
+
   <div id="desktop">
     <!-- Handwritten sticky note (macOS Stickies style). Drag it around. -->
     <div class="desktop-sticky" id="desktop-sticky" role="note">
@@ -5014,25 +5110,6 @@
     // ----------------------------------------------------
     // INITIALIZATION & BOOT LOADER                         
     // ----------------------------------------------------
-    // The boot screen reads like a designer's checklist, in order, ending on "Ready".
-    function runBootLines() {
-      const el = document.getElementById('boot-quote-text');
-      if (!el) return;
-      const count = (typeof badgesConfig !== 'undefined' && badgesConfig.length) ? badgesConfig.length : 40;
-      const lines = [
-        `Loading ${count} projects…`,
-        'Kerning every headline…',
-        'Making the logo bigger, as requested…',
-        'Ready. Come on in.'
-      ];
-      lines.forEach((line, i) => {
-        setTimeout(() => {
-          el.style.opacity = '0';
-          setTimeout(() => { el.textContent = line; el.style.opacity = '1'; }, 120);
-        }, i * 480);
-      });
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
       // Start system clock
       updateClock();
@@ -5042,7 +5119,6 @@
       const progressFill = document.getElementById('boot-progress');
       const bootScreen = document.getElementById('boot-screen');
       const portrait = document.getElementById('bg-portrait');
-      runBootLines();
       
       setTimeout(() => {
         progressFill.style.width = '100%';
@@ -5103,36 +5179,81 @@
 
       // Handle window resizing to update label colors
       window.addEventListener('resize', updateBadgeLabelColors);
+
+      // Re-arrange icons if the window crosses the phone/desktop size (or a phone rotates)
+      let lastPhoneMode = window.innerWidth <= 768;
+      let lastSize = `${window.innerWidth}x${window.innerHeight}`;
+      let relayoutTimer = null;
+      window.addEventListener('resize', () => {
+        clearTimeout(relayoutTimer);
+        relayoutTimer = setTimeout(() => {
+          const phoneMode = window.innerWidth <= 768;
+          const size = `${window.innerWidth}x${window.innerHeight}`;
+          if (phoneMode !== lastPhoneMode || (phoneMode && size !== lastSize)) {
+            renderBadges();
+            applyNightShift(document.body.classList.contains('night-shift'));
+          }
+          lastPhoneMode = phoneMode;
+          lastSize = size;
+        }, 150);
+      });
       window.addEventListener('scroll', updateBadgeLabelColors, { passive: true });
     });
 
     // ----------------------------------------------------
     // RENDERING DESKTOP BADGES                             
     // ----------------------------------------------------
+    // On phones, lay icons out on a loose grid (with a little jitter so it still feels hand-placed)
+    // so nothing overlaps. Returns pixel positions keyed by badge id.
+    function phoneBadgeLayout(canvas) {
+      const n = badgesConfig.length;
+      const left = 72, right = 8, top = 46, bottom = 20; // top leaves room for the Night Shift button
+      const areaW = Math.max(200, canvas.clientWidth - left - right);
+      const areaH = Math.max(300, canvas.clientHeight - top - bottom);
+      const cols = Math.max(3, Math.ceil(Math.sqrt(n * areaW / areaH)));
+      const rows = Math.ceil(n / cols);
+      const cellW = areaW / cols, cellH = areaH / rows;
+      const badgeW = Math.min(70, cellW - 4);
+      const positions = {};
+      badgesConfig.forEach((badge, i) => {
+        const r = Math.floor(i / cols), c = i % cols;
+        const jx = (Math.random() - 0.5) * Math.min(8, cellW - badgeW);
+        const jy = (Math.random() - 0.5) * 6;
+        positions[badge.id] = {
+          left: left + c * cellW + (cellW - badgeW) / 2 + jx,
+          top: top + r * cellH + jy,
+          width: badgeW
+        };
+      });
+      return positions;
+    }
+
     function renderBadges() {
       const canvas = document.getElementById('desktop-canvas') || document.getElementById('desktop');
       // Clear existing badges if re-rendering
       const existing = canvas.querySelectorAll('.project-badge');
       existing.forEach(el => el.remove());
+      const phone = window.innerWidth <= 768;
+      const phonePositions = phone ? phoneBadgeLayout(canvas) : null;
 
       badgesConfig.forEach((badge) => {
         // Use predefined coordinates, falling back to random placement if undefined
         let topVal = (badge.defaultTop !== undefined) ? badge.defaultTop : (8 + Math.random() * 72);
         let leftVal = (badge.defaultLeft !== undefined) ? badge.defaultLeft : (4 + Math.random() * 86);
         
-        // On mobile, gather all projects and scatter them randomly on the first screen
-        if (window.innerWidth <= 768) {
-          // Scatter randomly in bounds: left [22%, 88%] (to clear vertical dock) and top [5%, 85%]
-          leftVal = 22 + Math.random() * 66;
-          topVal = 5 + Math.random() * 80;
-        }
-        
         const badgeEl = document.createElement('div');
         badgeEl.id = `badge-${badge.id}`;
-        badgeEl.className = 'project-badge';
+        badgeEl.className = 'project-badge' + (NIGHT_SHIFT_IDS.has(badge.id) ? ' night-work' : '');
         badgeEl.setAttribute('data-project', badge.id);
-        badgeEl.style.top = `${topVal}%`;
-        badgeEl.style.left = `${leftVal}%`;
+        if (phonePositions) {
+          const p = phonePositions[badge.id];
+          badgeEl.style.left = `${p.left}px`;
+          badgeEl.style.top = `${p.top}px`;
+          badgeEl.style.setProperty('width', `${p.width}px`, 'important');
+        } else {
+          badgeEl.style.top = `${topVal}%`;
+          badgeEl.style.left = `${leftVal}%`;
+        }
         
         const aspectClass = badge.aspect === '1:1' ? 'aspect-1-1' : 'aspect-4-5';
         
@@ -5582,13 +5703,59 @@
       window.addEventListener('resize', reset);
     }
 
+    // Night Shift: everything after dark (events, festivals, nightlife and music platforms)
+    const NIGHT_SHIFT_IDS = new Set([
+      'alarm-of-dome-1', 'alarm-of-dome-2', 'alarm-of-dome-3', 'alarm-of-dome-4',
+      'alarm-of-dome-5', 'alarm-of-dome-6', 'alarm-of-dome-7', 'alarm-of-dome-8', 'more-of-alarm-of-dome',
+      'after-casa', 'holipurim-2026', 'jugnu', 'party-plug-india', 'plugcast', 'psy-culture-india',
+      'rave-culture-india', 'qila-ritual', 'qila-ritual-2', 'roast-and-rave', 'sands-of-sound',
+      'sandstorm-festival', 'sound-temple', 'techvatika', 'go-goa-gone', 'pickleball-x-techno',
+      'revelation-day', 'black-forest', 'strcture-mandawa', 'video-edits'
+    ]);
+
+    function applyNightShift(on) {
+      document.body.classList.toggle('night-shift', on);
+      const btn = document.getElementById('night-shift-toggle');
+      if (btn) {
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.querySelector('.ns-icon').textContent = on ? '☀︎' : '☾';
+        btn.querySelector('.ns-label').textContent = on ? 'Back to day' : 'Night Shift';
+        btn.title = on ? 'Show all work' : 'Show only the nightlife, festival and music work';
+      }
+    }
+
+    let lightsOutRunning = false;
+
+    function toggleNightShift() {
+      const turningOn = !document.body.classList.contains('night-shift');
+      const veil = document.getElementById('lights-out');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!turningOn || !veil || reduceMotion || !veil.animate) {
+        applyNightShift(turningOn);
+        return;
+      }
+      if (lightsOutRunning) return;
+      lightsOutRunning = true;
+      // Lights out: snap to black, hold a beat, switch the room to night, then fade the lights up.
+      const out = veil.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, easing: 'ease-in', fill: 'forwards' });
+      out.onfinish = () => {
+        document.body.classList.add('ns-instant');
+        applyNightShift(true);
+        setTimeout(() => {
+          document.body.classList.remove('ns-instant');
+          const up = veil.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 900, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards' });
+          up.onfinish = () => { lightsOutRunning = false; };
+        }, 380);
+      };
+    }
+
     // Puts the sticky note in the first corner of the desktop where it doesn't cover a project or the dock.
     function placeStickyNote(sticky) {
       if (window.innerWidth <= 768) return;
       const w = sticky.offsetWidth, h = sticky.offsetHeight;
       const W = window.innerWidth, H = window.innerHeight;
       const m = 28;
-      const obstacles = [...document.querySelectorAll('.project-badge, .dock-container, .desktop-controls')]
+      const obstacles = [...document.querySelectorAll('.project-badge, .dock-container, .desktop-controls, .night-shift-toggle')]
         .map(el => el.getBoundingClientRect())
         .filter(r => r.width && r.height);
       const candidates = [
@@ -7357,7 +7524,6 @@
       bootScreen.style.display = 'flex';
       bootScreen.style.opacity = '1';
       progressFill.style.width = '0%';
-      runBootLines();
       
       setTimeout(() => {
         progressFill.style.width = '100%';
