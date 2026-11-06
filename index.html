@@ -2412,9 +2412,6 @@
         font-size: 6.5px !important;
         letter-spacing: 0.4px;
         color: #ffffff !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
       }
 
       /* Fixed left-side vertical dock container (bychudy.com style) */
@@ -2843,6 +2840,30 @@
         font-weight: 600 !important;
         text-transform: uppercase !important;
         text-align: center !important;
+      }
+    }
+
+    /* Phone home screen: scrollable grid with readable names (keep after other phone rules) */
+    @media (max-width: 768px) {
+      .desktop-canvas {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+      .project-badge {
+        touch-action: manipulation !important;
+        cursor: pointer !important;
+      }
+      .badge-label {
+        font-size: 8.5px !important;
+        line-height: 1.2 !important;
+        letter-spacing: 0.3px !important;
+        white-space: normal !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden !important;
       }
     }
 
@@ -5205,15 +5226,13 @@
     // ----------------------------------------------------
     // On phones, lay icons out on a loose grid (with a little jitter so it still feels hand-placed)
     // so nothing overlaps. Returns pixel positions keyed by badge id.
+    // Phones scroll like a home screen, so rows get real breathing room for the names.
     function phoneBadgeLayout(canvas) {
-      const n = badgesConfig.length;
-      const left = 72, right = 8, top = 46, bottom = 20; // top leaves room for the Night Shift button
+      const left = 72, right = 8, top = 50; // top leaves room for the Night Shift button
       const areaW = Math.max(200, canvas.clientWidth - left - right);
-      const areaH = Math.max(300, canvas.clientHeight - top - bottom);
-      const cols = Math.max(3, Math.ceil(Math.sqrt(n * areaW / areaH)));
-      const rows = Math.ceil(n / cols);
-      const cellW = areaW / cols, cellH = areaH / rows;
-      const badgeW = Math.min(70, cellW - 4);
+      const cols = Math.min(5, Math.max(3, Math.floor(areaW / 72)));
+      const cellW = areaW / cols, cellH = 96;
+      const badgeW = Math.min(76, cellW - 4);
       const positions = {};
       badgesConfig.forEach((badge, i) => {
         const r = Math.floor(i / cols), c = i % cols;
@@ -5225,6 +5244,7 @@
           width: badgeW
         };
       });
+      positions.__end = top + Math.ceil(badgesConfig.length / cols) * cellH + 24;
       return positions;
     }
 
@@ -5235,6 +5255,13 @@
       existing.forEach(el => el.remove());
       const phone = window.innerWidth <= 768;
       const phonePositions = phone ? phoneBadgeLayout(canvas) : null;
+      canvas.querySelectorAll('.phone-scroll-end').forEach(el => el.remove());
+      if (phonePositions) {
+        const end = document.createElement('div');
+        end.className = 'phone-scroll-end';
+        end.style.cssText = `position:absolute;left:0;width:1px;height:1px;top:${phonePositions.__end}px;pointer-events:none;`;
+        canvas.appendChild(end);
+      }
 
       badgesConfig.forEach((badge) => {
         // Use predefined coordinates, falling back to random placement if undefined
@@ -5848,10 +5875,8 @@
       }
 
       function dragTouchStart(e) {
-        if (window.innerWidth <= 768) {
-          // On mobile, allow dragging project badges (icons) so users can access overlapping icons underneath, but keep windows non-draggable
-          if (!el.classList.contains('project-badge')) return;
-        }
+        // On phones nothing is dragged: icons sit on a scrollable grid and are opened with a tap.
+        if (window.innerWidth <= 768) return;
         if (e.target.closest('.window-controls') || e.target.closest('.control')) return;
         
         pos3 = e.touches[0].clientX;
