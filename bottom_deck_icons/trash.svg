@@ -1,0 +1,32 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="binBody" x1="60" y1="22" x2="60" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F4F6F8"/>
+      <stop offset="0.55" stop-color="#D9DDE2"/>
+      <stop offset="1" stop-color="#B9BFC7"/>
+    </linearGradient>
+    <linearGradient id="binShine" x1="30" y1="30" x2="90" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0.3" stop-color="#FFFFFF" stop-opacity="0.75"/>
+      <stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="60" y1="16" x2="60" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#C7CCD3"/>
+    </linearGradient>
+  </defs>
+  <!-- body -->
+  <path d="M24 26 H96 L89 104 C88.6 108.5 85 112 80.5 112 H39.5 C35 112 31.4 108.5 31 104 Z" fill="url(#binBody)" stroke="#9AA1AA" stroke-width="1.2"/>
+  <!-- ribs -->
+  <g stroke="#9EA5AE" stroke-width="2.2" stroke-linecap="round" opacity="0.75">
+    <path d="M42 38 L45 100"/>
+    <path d="M52 38 L53.5 100"/>
+    <path d="M60 38 L60 100"/>
+    <path d="M68 38 L66.5 100"/>
+    <path d="M78 38 L75 100"/>
+  </g>
+  <!-- glass shine -->
+  <path d="M24 26 H96 L89 104 C88.6 108.5 85 112 80.5 112 H39.5 C35 112 31.4 108.5 31 104 Z" fill="url(#binShine)"/>
+  <!-- rim -->
+  <rect x="19" y="17" width="82" height="12" rx="6" fill="url(#rim)" stroke="#9AA1AA" stroke-width="1.2"/>
+</svg>

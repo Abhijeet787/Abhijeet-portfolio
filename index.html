@@ -4,11 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Abhijeet Singh Rathore — Portfolio</title>
+  <meta name="description" content="Abhijeet Singh Rathore — visual designer for India's electronic music, festival, nightlife and lifestyle brands. Brand identities, event campaigns, social media, UI/UX and video.">
+  <link rel="canonical" href="https://abhijeet.world/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://abhijeet.world/">
+  <meta property="og:title" content="Abhijeet Singh Rathore — Portfolio">
+  <meta property="og:description" content="Visual designer for India's electronic music, festival, nightlife and lifestyle brands. Explore the work on a macOS-style desktop.">
+  <meta property="og:image" content="https://abhijeet.world/color%20bg2.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f3f3f3">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   
   <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -85,6 +96,7 @@
       max-width: 90%;
       line-height: 1.4;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      transition: opacity 0.12s ease;
     }
 
     .progress-bar-container {
@@ -831,6 +843,57 @@
     }
 
     /* Floating Desktop Controls styling */
+    /* Handwritten sticky note on the desktop */
+    .desktop-sticky {
+      position: absolute;
+      top: 72px;
+      left: 3%;
+      width: 196px;
+      padding: 16px 16px 18px;
+      background: linear-gradient(180deg, #fff59a 0%, #fdee7c 100%);
+      border-radius: 2px;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.08),
+        0 8px 18px rgba(0, 0, 0, 0.14);
+      transform: rotate(-2.5deg);
+      z-index: 60;
+      cursor: grab;
+      user-select: none;
+      animation: stickyIn 0.6s cubic-bezier(0.2, 0.9, 0.25, 1.1) 2.4s both;
+    }
+    .desktop-sticky::before {
+      /* a strip of tape */
+      content: '';
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      width: 64px;
+      height: 18px;
+      margin-left: -32px;
+      background: rgba(255, 255, 255, 0.55);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      transform: rotate(3deg);
+    }
+    .desktop-sticky:active { cursor: grabbing; }
+    .desktop-sticky p {
+      margin: 0;
+      font-family: 'Caveat', 'Bradley Hand', cursive;
+      font-size: 21px;
+      font-weight: 600;
+      line-height: 1.12;
+      color: #2b2410;
+    }
+    @keyframes stickyIn {
+      from { opacity: 0; transform: rotate(-8deg) translateY(-14px) scale(0.96); }
+      to { opacity: 1; transform: rotate(-2.5deg) translateY(0) scale(1); }
+    }
+    @media (max-width: 768px) {
+      .desktop-sticky { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .desktop-sticky { animation: none; }
+    }
+
     .desktop-controls {
       position: absolute;
       top: 16px;
@@ -1953,34 +2016,53 @@
       bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 500;
+      z-index: 9000; /* like macOS, the dock stays above open windows */
       pointer-events: auto;
       display: flex;
       justify-content: center;
     }
 
+    /* macOS Tahoe "Liquid Glass" dock: nearly clear glass that takes its colour from what's behind,
+       a light blur, and a thin crisp light outline. */
     .dock {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 10px;
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.18) 0%,
-        rgba(255, 255, 255, 0.06) 45%,
-        rgba(0, 0, 0, 0.15) 45.1%,
-        rgba(0, 0, 0, 0.35) 100%
-      );
-      backdrop-filter: blur(30px) saturate(190%) brightness(105%);
-      -webkit-backdrop-filter: blur(30px) saturate(190%) brightness(105%);
-      border: 0.5px solid rgba(255, 255, 255, 0.22);
-      border-top-color: rgba(255, 255, 255, 0.45);
-      border-bottom-color: rgba(0, 0, 0, 0.4);
+      align-items: flex-end;
+      gap: 6px;
+      padding: 6px 7px;
+      position: relative;
+      isolation: isolate;
+      background: rgba(255, 255, 255, 0.10);
+      backdrop-filter: blur(5px) saturate(170%);
+      -webkit-backdrop-filter: blur(5px) saturate(170%);
+      border: none;
       border-radius: 22px;
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.35);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 0 0 0.5px rgba(0, 0, 0, 0.12),
+        0 4px 18px rgba(0, 0, 0, 0.10);
       transform-origin: bottom center;
+    }
+
+    /* Thin light rim, a touch brighter along the top edge */
+    .dock::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.55) 0%,
+        rgba(255, 255, 255, 0.22) 40%,
+        rgba(255, 255, 255, 0.22) 75%,
+        rgba(255, 255, 255, 0.40) 100%
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: -1;
     }
 
     .dock-item {
@@ -1991,6 +2073,38 @@
       align-items: center;
       position: relative;
       cursor: pointer;
+      flex: none;
+      transition: width 0.18s cubic-bezier(0.25, 1, 0.5, 1), height 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* While the pointer moves along the dock, sizes follow it instantly (macOS magnification) */
+    .dock.magnifying .dock-item {
+      transition: width 0.06s linear, height 0.06s linear;
+    }
+
+    /* Small dot under apps with an open window, as on macOS */
+    .dock-item.running::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      margin-left: -2px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    /* Launch bounce */
+    @keyframes dockBounce {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-18px); }
+      50% { transform: translateY(0); }
+      70% { transform: translateY(-8px); }
+      85% { transform: translateY(0); }
+    }
+    .dock-item.bouncing svg, .dock-item.bouncing img {
+      animation: dockBounce 0.75s cubic-bezier(0.3, 0, 0.3, 1);
     }
 
     .dock-item svg, .dock-item img {
@@ -2002,9 +2116,10 @@
 
     .dock-divider {
       width: 1px;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: 0 -5.5px;
+      height: 40px;
+      align-self: center;
+      background: rgba(0, 0, 0, 0.15);
+      margin: 0 3px;
     }
 
     /* Tooltip */
@@ -2050,6 +2165,96 @@
     }
 
     /* Indicator light under active apps removed */
+
+    /* ---------------------------------------------------- */
+    /* TRASH — "CLIENT SAID NO"                             */
+    /* ---------------------------------------------------- */
+    .trash-body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #ffffff;
+    }
+    .trash-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      border-bottom: 1px solid #ebebf0;
+      background: #fafafa;
+    }
+    .trash-toolbar-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+    .trash-toolbar-sub {
+      font-size: 11px;
+      color: #86868b;
+    }
+    .trash-empty-btn {
+      font: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      color: #1d1d1f;
+      background: #ffffff;
+      border: 1px solid #d2d2d7;
+      border-radius: 6px;
+      padding: 4px 12px;
+      cursor: pointer;
+    }
+    .trash-empty-btn:hover { background: #f2f2f7; }
+    .trash-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 18px;
+      padding: 18px;
+      overflow-y: auto;
+    }
+    .trash-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .trash-item img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      filter: saturate(0.85);
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .trash-item:hover img { transform: rotate(-1.5deg) scale(1.02); filter: none; }
+    .trash-item-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #1d1d1f;
+      text-align: center;
+      word-break: break-word;
+    }
+    .trash-item-note {
+      font-size: 11px;
+      color: #86868b;
+      text-align: center;
+      line-height: 1.35;
+    }
+    .trash-empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 8px;
+      padding: 32px;
+      color: #86868b;
+    }
+    .trash-empty-state img { width: 72px; height: 72px; opacity: 0.85; margin-bottom: 6px; }
+    .trash-empty-state strong { font-size: 15px; color: #1d1d1f; }
+    .trash-empty-state span { font-size: 12px; max-width: 280px; line-height: 1.45; }
 
     /* ---------------------------------------------------- */
     /* RESPONSIVENESS AND MOBILE LAYOUT                     */
@@ -2155,21 +2360,15 @@
         width: auto !important;
         max-width: none !important;
         height: auto !important;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0.18) 0%,
-          rgba(255, 255, 255, 0.06) 45%,
-          rgba(0, 0, 0, 0.15) 45.1%,
-          rgba(0, 0, 0, 0.35) 100%
-        ) !important;
-        backdrop-filter: blur(30px) saturate(190%) brightness(105%) !important;
-        -webkit-backdrop-filter: blur(30px) saturate(190%) brightness(105%) !important;
-        border: 0.5px solid rgba(255, 255, 255, 0.22) !important;
-        border-left-color: rgba(255, 255, 255, 0.45) !important;
-        border-right-color: rgba(0, 0, 0, 0.4) !important;
-        box-shadow: 
-          0 20px 40px rgba(0, 0, 0, 0.4), 
-          inset 0.5px 0 0 rgba(255, 255, 255, 0.35) !important;
+        background: rgba(255, 255, 255, 0.10) !important;
+        backdrop-filter: blur(5px) saturate(170%) !important;
+        -webkit-backdrop-filter: blur(5px) saturate(170%) !important;
+        border: none !important;
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+          inset 1px 0 0 rgba(255, 255, 255, 0.35),
+          0 0 0 0.5px rgba(0, 0, 0, 0.12),
+          0 4px 18px rgba(0, 0, 0, 0.10) !important;
         margin: 0 !important;
       }
 
@@ -2195,7 +2394,8 @@
         display: block !important;
         width: 24px !important;
         height: 1px !important;
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: rgba(0, 0, 0, 0.15) !important;
+        align-self: center !important;
         margin: -4.5px 0 !important;
       }
 
@@ -2934,7 +3134,7 @@
 
   <!-- 1. APPLE BOOT SCREEN -->
   <div id="boot-screen">
-    <p class="boot-quote" id="boot-quote-text">Crafting in the present. Upgrading for the future.</p>
+    <p class="boot-quote" id="boot-quote-text">Waking up the desktop…</p>
     <div class="progress-bar-container">
       <div class="progress-bar-fill" id="boot-progress"></div>
     </div>
@@ -2945,7 +3145,6 @@
     <div class="background-image-blur default-bg"></div>
     <div class="background-image-blur active-bg"></div>
     <div class="bg-portrait-wrapper" id="bg-portrait">
-      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=1000" alt="Background Portrait">
       <div class="bg-portrait-glass-overlay"></div>
     </div>
     <div class="background-overlay-grid"></div>
@@ -2999,6 +3198,10 @@
   <!-- 4. DESKTOP CONTAINER (WITH BADGES & WINDOWS) -->
   <!-- 4. DESKTOP CONTAINER (WITH BADGES & WINDOWS) -->
   <div id="desktop">
+    <!-- Handwritten sticky note (macOS Stickies style). Drag it around. -->
+    <div class="desktop-sticky" id="desktop-sticky" role="note">
+      <p>Hi, I'm Abhijeet 👋<br>I design for dance floors, cafés, streetwear and brands that don't do safe.</p>
+    </div>
     <div class="desktop-canvas" id="desktop-canvas">
       <!-- Mobile iOS Grid System -->
       <div class="mobile-ios-container" id="mobile-ios-container"></div>
@@ -3076,6 +3279,14 @@
         <img src="bottom_deck_icons/Music.svg" alt="Music">
         <span class="dock-tooltip">Music</span>
       </div>
+
+      <div class="dock-divider"></div>
+
+      <!-- Trash: rejected concepts ("Client said no") -->
+      <div class="dock-item" id="dock-trash" onclick="launchApp(this, () => openTrash())">
+        <img src="bottom_deck_icons/trash.svg" alt="Trash">
+        <span class="dock-tooltip">Trash</span>
+      </div>
     </div>
   </div>
 
@@ -3085,75 +3296,6 @@
     // PROJECT DATA CONFIGURATION                           
     // ----------------------------------------------------
     const projects = {
-      'efemmera': {
-        title: 'NIE.ISTOTY',
-        subtitle: 'Efemmera',
-        role: 'Art Direction / Design / Photography / Video / Retouching',
-        client: 'Efemmera',
-        year: '2025',
-        tags: ['Design', 'Typography', 'Art Direction', 'Photography'],
-        description: 'A multidisciplinary project that merges design and music. Born from a live performance featuring original music and lyrics, Efemmera was formed and released their debut album NIE.ISTOTY. As the art director, I oversaw everything from naming the band and album to creating the branding, covers, video, retouching photography – and even did the makeup! The name Efemmera blends femme and era, reflecting the band\'s identity and values. It represents something fleeting, coexisting with harsh reality, and striving for change through empathy.',
-        deliverables: ['Album covers', 'Visual branding', 'Music video', 'Photography retouching'],
-        projectBrief: {
-          challenge: 'Creating a cohesive visual identity for an experimental music group that captures their values of empathy and fleeting beauty.',
-          solution: 'Designed an expressive identity system combining analog photography, customized typography, and music video art direction.'
-        },
-        themeClass: 'theme-royal-blue',
-        img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600',
-      
-        gallery: [
-        {
-          label: 'Visual Preview',
-          images: ['https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=600']
-        }
-      ],
-      },
-      'newonce': {
-        title: 'NEWONCE',
-        subtitle: 'newonce',
-        role: 'Creative Direction / Print Design',
-        client: 'newonce',
-        year: '2025',
-        tags: ['Print', 'Layout', 'Branding'],
-        description: 'A visual print layout campaign for newonce, focusing on high-contrast street elements, photocopier texture distortions, and bold grid typography.',
-        deliverables: ['Magazine layout', 'Poster layouts', 'Branding guidelines'],
-        projectBrief: {
-          challenge: 'Developing a bold print campaign design that stands out in youth-focused street culture.',
-          solution: 'Engineered a black-and-white visual concept featuring raw textures and expressive street graphics.'
-        },
-        themeClass: 'theme-minimal-dark',
-        img: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600',
-      
-        gallery: [
-        {
-          label: 'Visual Preview',
-          images: ['https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600']
-        }
-      ],
-      },
-      'interludium': {
-        title: 'INTERLUDIUM',
-        subtitle: 'Interludium Beat',
-        role: 'Editorial Design / Layout',
-        client: 'Hvnly Records',
-        year: '2025',
-        tags: ['Design', 'Typography', 'Layout'],
-        description: 'Editorial layout and visual design campaign for Interludium, a conceptual music and design crossover exploring industrial and abstract visuals.',
-        deliverables: ['Event design layout', 'Cover artwork', 'Typography spec sheet'],
-        projectBrief: {
-          challenge: 'Formulating a unified typographic style for a music-design crossover project.',
-          solution: 'Curated high-contrast abstract illustrations overlayed with precise grid layout typography.'
-        },
-        themeClass: 'theme-crimson-red',
-        img: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=600',
-      
-        gallery: [
-        {
-          label: 'Visual Preview',
-          images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=600']
-        }
-      ],
-      },
       'alarm-of-dome-1': {
         title: 'Alarm of Dome 01',
         subtitle: 'Flagship Techno IP - Ed. 1',
@@ -3161,11 +3303,11 @@
         client: 'Alarm of Dome',
         year: '2023',
         tags: ['Industrial', 'Techno IP', 'Poster Design'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 01 is where it all started.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Launch a hardcore electronic music concept in a dome-shaped industrial setting with minimal initial budget.',
-          solution: 'Created a high-contrast black-and-white identity that captured the raw warehouse rave spirit.'
+          challenge: 'Launch a hard techno night in an industrial dome, on almost no budget.',
+          solution: 'Black, white and loud. A high-contrast identity with the raw energy of a warehouse party.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 1.jpg',
@@ -3184,11 +3326,11 @@
         client: 'Alarm of Dome',
         year: '2023',
         tags: ['Modular Grid', 'Motion Graphics', 'Techno IP'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 02: the sound got more machine-heavy, so the visuals did too.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Evolve the visual brand identity of the series to reflect a more complex hardware-focused musical direction.',
-          solution: 'Designed modular grid systems and screen-distortion textures for promotional flyers.'
+          challenge: 'The music went deeper into hardware. The visuals had to keep up.',
+          solution: 'Modular grids and screen-distortion textures across every flyer.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 2.jpg',
@@ -3207,11 +3349,11 @@
         client: 'Alarm of Dome',
         year: '2024',
         tags: ['Generative Design', 'Glitch Art', 'Flyers'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 03 was glitch season.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Develop an intense visual atmosphere reflecting deep, hypnotic industrial tracks during live performances.',
-          solution: 'Created generative audio-reactive templates and printed flyers using high-contrast digital glitch layers.'
+          challenge: 'Make the posters feel as hypnotic as the tracks.',
+          solution: 'Heavy glitch layers over high-contrast artwork, for print and digital.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 3.jpg',
@@ -3230,11 +3372,11 @@
         client: 'Alarm of Dome',
         year: '2024',
         tags: ['Structural Grids', 'Warehouse Rave', 'Ticket Design'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 04: bigger warehouse, bigger crowd, actual venue maps.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Branding a large-scale warehouse rave under the uncompromised Alarm of Dome label, ensuring safe navigation layout.',
-          solution: 'Developed clean wireframe architectural diagrams for venue mapping and high-vis ticket aesthetics.'
+          challenge: 'A bigger warehouse edition, and people needed to find their way around it.',
+          solution: 'Clean architectural venue maps and high-visibility tickets. Still unmistakably Alarm of Dome.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 4.jpg',
@@ -3253,11 +3395,11 @@
         client: 'Alarm of Dome',
         year: '2024',
         tags: ['Neon Aesthetics', 'Scanned Text', 'Digital Assets'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 05 went darker, grainier and a little neon.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Building a high-energy event identity focusing on stark dark contrast and physical texture.',
-          solution: 'Used analog photocopier scan distortions on bold typography overlaid with neon green vectors.'
+          challenge: 'Go darker, and make it feel like something you could touch.',
+          solution: 'Photocopier scan distortions on bold type, cut with neon green.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 5.jpg',
@@ -3276,11 +3418,11 @@
         client: 'Alarm of Dome',
         year: '2025',
         tags: ['Thermal Maps', 'Typographic Grids', 'Event Teaser'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 06 was the winter one, designed to look like body heat.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Translating cold industrial techno sounds into thermal and tactile visual assets for a winter crowd.',
-          solution: 'Developed thermal-imaging poster templates and animated video teasers featuring heat-map gradients.'
+          challenge: 'Cold industrial techno for a winter crowd. Make it feel warm.',
+          solution: 'Thermal-camera colour gradients across the posters and video teasers.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 6.jpg',
@@ -3299,11 +3441,11 @@
         client: 'Alarm of Dome',
         year: '2025',
         tags: ['Scan Errors', 'Lasers', 'Minimalist'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 07: less on the poster, more in the room.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Designing clean but intense promotional graphics for a flagship underground techno IP.',
-          solution: 'Merged extreme high-frequency laser path vectors with analog scan errors to define the poster layouts.'
+          challenge: 'Keep it minimal. Keep it intense.',
+          solution: 'Laser-thin lines meet analog scan errors. That\'s the whole poster system.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 7.jpg',
@@ -3322,11 +3464,11 @@
         client: 'Alarm of Dome',
         year: '2025',
         tags: ['Motion Graphics', 'Posters', 'Event Artwork'],
-        description: 'Eight editions deep. Alarm of Dome is a flagship underground techno IP. Hard, hypnotic, industrial, and completely uncompromised. A community that knows exactly what it\'s there for.',
+        description: 'Alarm of Dome is a hard techno night that refuses to play nice. Eight editions in, the crowd knows exactly why it shows up. Edition 08, and still not playing nice.',
         deliverables: ['Visual direction across multiple editions including event artwork', 'Poster series', 'Motion graphics'],
         projectBrief: {
-          challenge: 'Pushing the boundaries of dark, heavy techno aesthetics for the eighth edition of the flagship IP.',
-          solution: 'Created modular typographic frameworks and dark-mode projection assets for the event rollout.'
+          challenge: 'Eight editions in. Push the darkness further without repeating ourselves.',
+          solution: 'A modular type system and dark projection visuals for the full rollout.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Alarm of Dome 8.jpg',
@@ -3345,11 +3487,11 @@
         client: 'Alarm of Dome Archive',
         year: '2025',
         tags: ['Archive', 'Brand Research', 'Typography'],
-        description: 'A compiled archive of conceptual artwork, experimental layouts, unused drafts, and visual experiments developed for the Alarm of Dome IP.',
+        description: 'Everything that didn\'t make the final poster. Drafts, experiments and ideas that were almost too much, even for Alarm of Dome.',
         deliverables: ['Compilation', 'Graphic experimentation', 'Brand archive design'],
         projectBrief: {
-          challenge: 'Showcasing the deep visual research and typographic exploration that powers the IP.',
-          solution: 'Organized draft works into a digital grid compilation that highlights the aesthetic journey of the brand.'
+          challenge: 'Show the thinking behind eight editions, not only the finished posters.',
+          solution: 'All the drafts and experiments in one grid, so you can watch the look evolve.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/More of Alarm of Dome.jpg',
@@ -3368,11 +3510,11 @@
         client: 'Bhaiji Coffee Shop',
         year: '2025',
         tags: ['Print Design', 'Editorial Menu', 'Typography'],
-        description: 'A new specialty cafe positioning itself as the best cup in town. Artisanal, premium, and serious about the craft.',
+        description: 'A new specialty café that wants to be the best cup in town. Big claim. The menu had to back it up.',
         deliverables: ['Complete print-ready editorial menu design'],
         projectBrief: {
-          challenge: 'Create a print-ready editorial menu that conveys high-end specialty coffee brewing standards.',
-          solution: 'Used a typography-first layout with clean spacing, elegant serif headers, and warm organic color palettes.'
+          challenge: 'A print menu that says \'we take coffee seriously\' before you even order.',
+          solution: 'Type-first layout, generous spacing, elegant serif headings and warm, earthy colours.'
         },
         themeClass: 'theme-warm-amber',
         img: 'Floating project icons jpg/Bhaiji Coffee.jpg',
@@ -3391,58 +3533,58 @@
         client: 'Funtroo Streetwear',
         year: '2026',
         tags: ['Streetwear', 'Editorial Campaign', 'Web Experience'],
-        description: 'An Indian luxury streetwear house with a dark, conceptual edge. Heavyweight apparel, distinct collections, and a brand that doesn\'t do safe.',
+        description: 'Indian luxury streetwear with a dark, conceptual edge. Heavyweight fabric, distinct collections, zero interest in playing safe.',
         deliverables: ['Complete q1 2026 digital rollout including editorial campaigns', 'Web experience', 'Marketing strategy'],
         projectBrief: {
-          challenge: 'Structure the Q1 2026 apparel drops in a way that establishes Funtroo as an avant-garde digital brand.',
-          solution: 'Created brutalist grid website layouts and high-contrast editorial photography guides.'
+          challenge: 'Roll out the Q1 2026 drops so Funtroo reads as a serious, avant-garde label online.',
+          solution: 'Brutalist grids for the website and high-contrast editorial guides for the shoots.'
         },
         themeClass: 'theme-luxury-gold',
         img: 'Floating project icons jpg/Funtroo.jpg',
       
         gallery: [
         {
-          label: 'Funtroo (37)',
+          label: 'Carousel 01',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo (37)/funtroo carouseel10 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo (37)/funtroo carouseel10 page2.jpg']
         },
         {
-          label: 'Funtroo (38)',
+          label: 'Carousel 02',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo (38)/funtroo carouseel11 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo (38)/funtroo carouseel11 page2.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo (38)/funtroo carouseel11 page3.jpg']
         },
         {
-          label: 'Funtroo1',
+          label: 'Carousel 03',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo1/funtroo carouseel1 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo1/funtroo carouseel1 page2.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo1/funtroo carouseel1 page3.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo1/funtroo carouseel1 page4.jpg']
         },
         {
-          label: 'Funtroo10',
+          label: 'Carousel 04',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo10/funtroo carouseel12 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo10/funtroo carouseel12 page2.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo10/funtroo carouseel12 page3.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo10/funtroo carouseel12 page4.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo10/funtroo carouseel12 page5.jpg']
         },
         {
-          label: 'Funtroo2',
+          label: 'Carousel 05',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo2/funtroo carouseel2 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo2/funtroo carouseel2 page2.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo2/funtroo carouseel2 page3.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo2/funtroo carouseel2 page4.jpg']
         },
         {
-          label: 'Funtroo3',
+          label: 'Carousel 06',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo3/funtroo carouseel3 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo3/funtroo carouseel3 page2.jpg']
         },
         {
-          label: 'Funtroo4',
+          label: 'Carousel 07',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo4/funtroo carouseel5 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo4/funtroo carouseel5 page2.jpg']
         },
         {
-          label: 'Funtroo5',
+          label: 'Carousel 08',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo5/funtroo carouseel6 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo5/funtroo carouseel6 page2.jpg']
         },
         {
-          label: 'Funtroo6',
+          label: 'Carousel 09',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo6/funtroo carouseel7 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo6/funtroo carouseel7 page2.jpg']
         },
         {
-          label: 'Funtroo7',
+          label: 'Carousel 10',
           images: ['project_creatives/funtroo/Funtroo creatives/funtroo7/funtroo carouseel9 page1.jpg', 'project_creatives/funtroo/Funtroo creatives/funtroo7/funtroo carouseel9 page2.jpg']
         },
         {
-          label: 'Funtroo New Creatives',
+          label: 'New Creatives',
           images: [
             'project_creatives/funtroo/Funtroo creatives/funtroo new creatives/109.jpg',
             'project_creatives/funtroo/Funtroo creatives/funtroo new creatives/119.jpg',
@@ -3460,17 +3602,17 @@
         client: 'Black Forest',
         year: '2026',
         tags: ['Creative Direction', 'Visual Identity', 'Editorial Design'],
-        description: 'An immersive visual campaign exploring bold aesthetics, rich textures, and dramatic creative direction.',
+        description: 'Dark, textured and dramatic. A visual series that leans all the way into the mood.',
         deliverables: ['Editorial Carousel Series', 'Visual Branding', 'Digital Campaign Assets'],
         projectBrief: {
-          challenge: 'Develop a compelling, high-contrast visual series for Black Forest.',
-          solution: 'Designed multi-page editorial carousels with dark, atmospheric typography and structured composition.'
+          challenge: 'A high-contrast series that holds attention in a crowded feed.',
+          solution: 'Multi-page carousels with atmospheric type and tight, structured layouts.'
         },
         themeClass: 'theme-minimal-dark',
         img: 'Floating project icons jpg/Black Forest.jpg',
         gallery: [
           {
-            label: 'Black Forest Carousel 1',
+            label: 'Carousel 01',
             images: [
               'project_creatives/Black Forest/Black forest carousel 1/Black forest carousel 1 page 1.jpg',
               'project_creatives/Black Forest/Black forest carousel 1/Black forest carousel 1 page 2.jpg',
@@ -3478,7 +3620,7 @@
             ]
           },
           {
-            label: 'Black Forest Carousel 2',
+            label: 'Carousel 02',
             images: [
               'project_creatives/Black Forest/Black forest carousel 2 /Black forest carousel 2 page 1.jpg',
               'project_creatives/Black Forest/Black forest carousel 2 /Black forest carousel 2 page 2.jpg',
@@ -3494,23 +3636,23 @@
         client: 'Revelation Day',
         year: '2026',
         tags: ['Event Identity', 'Visual Art', 'Campaign Design'],
-        description: 'A dark conceptual event campaign featuring surreal visual art, custom typography, and high-impact digital carousels.',
+        description: 'A dark, surreal event campaign. Custom type, strange art, and carousels you have to swipe to the end.',
         deliverables: ['Multi-Series Social Carousels', 'Event Key Visuals', 'Digital Brand Assets'],
         projectBrief: {
-          challenge: 'Create an intense, unforgettable identity for Revelation Day.',
-          solution: 'Crafted multi-slide narrative carousels and key poster artwork with dark, vivid motifs.'
+          challenge: 'Give Revelation Day an identity people still remember after the night ends.',
+          solution: 'Story-led carousels and key poster art built on dark, vivid motifs.'
         },
         themeClass: 'theme-cyber-punk',
         img: 'Floating project icons jpg/Revelation Day.jpg',
         gallery: [
           {
-            label: 'Revelation Day Carousel 1',
+            label: 'Carousel 01',
             images: [
               'project_creatives/Revelation Day/Revelation Day carousel 1/Revelation Day carousel 1 page 1.jpg'
             ]
           },
           {
-            label: 'Revelation Day Carousel 2',
+            label: 'Carousel 02',
             images: [
               'project_creatives/Revelation Day/Revelation Day carousel 2/Revelation Day carousel 2 page 1.jpg',
               'project_creatives/Revelation Day/Revelation Day carousel 2/Revelation Day carousel 2 page 2.jpg',
@@ -3520,7 +3662,7 @@
             ]
           },
           {
-            label: 'Revelation Day Carousel 3',
+            label: 'Carousel 03',
             images: [
               'project_creatives/Revelation Day/Revelation Day carousel 3/Revelation Day carousel 3 page 1.jpg',
               'project_creatives/Revelation Day/Revelation Day carousel 3/Revelation Day carousel 3 page 2.jpg',
@@ -3538,17 +3680,17 @@
         client: 'Strcture Mandawa',
         year: '2026',
         tags: ['Architectural Experience', 'Brand Identity', 'Story Carousels', 'Main Carousels'],
-        description: 'A cultural and architectural design project capturing heritage structure and modern spatial aesthetics through curated story & post carousels.',
+        description: 'Heritage architecture in Mandawa, told for the Instagram generation. Old walls, new grids.',
         deliverables: ['Story Carousel Series', 'Main Carousel Series', 'Architectural Graphics', 'Hype Post Series'],
         projectBrief: {
-          challenge: 'Translate architectural heritage into modern digital social storytelling.',
-          solution: 'Designed clean, grid-aligned carousels highlighting structure, lighting, and cultural essence.'
+          challenge: 'Make heritage feel current on social, without turning it into a museum label.',
+          solution: 'Clean, grid-aligned carousels and stories that let the structure, the light and the culture do the talking.'
         },
         themeClass: 'theme-luxury-gold',
         img: 'Floating project icons jpg/Strcture Mandawa.jpg',
         gallery: [
           {
-            label: 'Strcture Mandawa Carousel 1',
+            label: 'Carousel 01',
             images: [
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 1/Strcture Mandawa carousel 1 page 1.jpg',
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 1/Strcture Mandawa carousel 1 page 2.jpg',
@@ -3556,7 +3698,7 @@
             ]
           },
           {
-            label: 'Strcture Mandawa Carousel 2',
+            label: 'Carousel 02',
             images: [
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 2/Strcture Mandawa carousel 2 page 1.jpg',
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 2/Strcture Mandawa carousel 2 page 3.jpg',
@@ -3569,7 +3711,7 @@
             ]
           },
           {
-            label: 'Strcture Mandawa Carousel 3',
+            label: 'Carousel 03',
             images: [
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 3/Strcture Mandawa carousel 3 page 1.jpg',
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 3/Strcture Mandawa carousel 3 page 2.jpg',
@@ -3581,7 +3723,7 @@
             ]
           },
           {
-            label: 'Strcture Mandawa Carousel 4 (Hype Post)',
+            label: 'Carousel 04 (Hype Post)',
             images: [
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 4/mandawa hype post Slide 1.jpg',
               'project_creatives/Strcture Mandawa/Strcture Mandawa carousel 4/mandawa hype post Slide 2.jpg',
@@ -3592,7 +3734,7 @@
             ]
           },
           {
-            label: 'Strcture Mandawa Carousel 5',
+            label: 'Carousel 05',
             images: [
               'project_creatives/Strcture Mandawa/strcture mandawa carousel 5/mandawa strcture slide 1.jpg',
               'project_creatives/Strcture Mandawa/strcture mandawa carousel 5/mandawa strcture slide 2.jpg',
@@ -3605,7 +3747,7 @@
             ]
           },
           {
-            label: 'Strcture Mandawa Carousel 6',
+            label: 'Carousel 06',
             images: [
               'project_creatives/Strcture Mandawa/strcture mandawa carousel 6/Slide 1.jpg',
               'project_creatives/Strcture Mandawa/strcture mandawa carousel 6/Slide 2.jpg',
@@ -3616,7 +3758,7 @@
             ]
           },
           {
-            label: 'Strcture Mandawa Story Carousel 1',
+            label: 'Story Carousel 01',
             images: [
               'project_creatives/Strcture Mandawa/Strcture Mandawa Story carousel 1/Strcture Mandawa Story carousel 1 page 1.jpg',
               'project_creatives/Strcture Mandawa/Strcture Mandawa Story carousel 1/Strcture Mandawa Story carousel 1 page 2.jpg',
@@ -3624,7 +3766,7 @@
             ]
           },
           {
-            label: 'Strcture Mandawa Story Carousel 2',
+            label: 'Story Carousel 02',
             images: [
               'project_creatives/Strcture Mandawa/Strcture Mandawa Story carousel 2/Strcture Mandawa Story carousel 2 page 1.jpg',
               'project_creatives/Strcture Mandawa/Strcture Mandawa Story carousel 2/Strcture Mandawa Story carousel 2 page 2.jpg'
@@ -3639,11 +3781,11 @@
         client: 'After Casa Dehradun',
         year: '2026',
         tags: ['Festival Identity', 'Key Visuals', 'Artist Flyers', 'Underground Music'],
-        description: 'A multi-genre nightlife and electronic music festival identity in Dehradun featuring immersive dark visuals, gothic architectural motifs, and tailored artist lineup collaterals.',
+        description: 'A nightlife and electronic music festival in Dehradun. Gothic, surreal, and nothing like your usual hill-station weekend.',
         deliverables: ['Main Key Visual & Festival Poster', 'Artist Lineup Flycards', 'Event Collaterals'],
         projectBrief: {
-          challenge: 'Create a distinctive, gothic-surreal nightlife aesthetic reflecting Dehradun’s clock tower landmark and underground electronic music culture.',
-          solution: 'Blended surreal architectural illustration with dual skull motifs, neon typography, and a cohesive artist lineup series.'
+          challenge: 'A gothic, surreal look rooted in Dehradun\'s clock tower and its underground music scene.',
+          solution: 'Surreal architectural illustration, twin skull motifs, neon type, and a matching flyer for every artist on the lineup.'
         },
         themeClass: 'theme-neon-purple',
         img: 'Floating project icons jpg/After Casa.jpg',
@@ -3673,11 +3815,11 @@
         client: 'Holipurim Festival',
         year: '2026',
         tags: ['Environmental Design', 'Large-scale Print', 'Signage'],
-        description: 'Last minute. Days before showtime. A major festival needed a box office entrance that could hold its own against the scale of the event. No time to overthink it.',
+        description: 'Last minute. Days before showtime. A major festival needed a box office entrance that could stand up to the scale of the event. No time to overthink it.',
         deliverables: ['A 50 by 12 foot custom entrance gate designed and delivered under a tight deadline'],
         projectBrief: {
-          challenge: 'Design and deliver a massive physical entrance gate layout under a tight 48-hour deadline.',
-          solution: 'Constructed an immersive, typographic large-scale gate layout that was quickly printed and installed.'
+          challenge: 'Design a 50 × 12 ft entrance gate, then get it printed and installed within 48 hours.',
+          solution: 'A bold, type-led gate built for speed. Designed, printed and installed on time.'
         },
         themeClass: 'theme-minimal-dark',
         img: 'Floating project icons jpg/Holipurim 2026.jpg',
@@ -3696,11 +3838,11 @@
         client: 'Jugnu Ajmer',
         year: '2025',
         tags: ['Cultural Branding', 'Nightlife IP', 'Event Design'],
-        description: 'A Diwali-season nightlife experience on an island stay in Ajmer. Poolside, intimate, with Rajasthani folk music and live mandali performances. Premium and rooted at the same time.',
+        description: 'A Diwali-season night on an island stay in Ajmer. Poolside, intimate, Rajasthani folk music and live mandali. Premium and rooted at the same time.',
         deliverables: ['Full event identity', 'Cultural branding', 'All digital promotional materials'],
         projectBrief: {
-          challenge: 'Merge traditional Rajasthani folk music with contemporary luxury nightlife design on a private island.',
-          solution: 'Designed visual elements featuring glowing firefly patterns (Jugnu) overlaid on traditional royal arches.'
+          challenge: 'Folk music meets a luxury night out, on a private island.',
+          solution: 'Glowing firefly patterns (jugnu, literally) over traditional royal arches.'
         },
         themeClass: 'theme-cosmic-indigo',
         img: 'Floating project icons jpg/Jugnu.jpg',
@@ -3719,38 +3861,38 @@
         client: 'Kalacurry Studio',
         year: '2025',
         tags: ['Agency Operations', 'Creative Direction', 'Brand Consulting'],
-        description: 'A multi-disciplinary creative studio built to elevate modern brands through deep research, sharp visuals, and data-driven marketing. This one\'s mine.',
+        description: 'My own studio. Research first, sharp visuals always, and marketing that actually makes sense. Yes, I\'m biased.',
         deliverables: ['Founded and lead the studio', 'Managing all creative direction and client portfolios end-to-end'],
         projectBrief: {
-          challenge: 'Establishing my own creative agency, setting design standards, and structuring a client growth pipeline.',
-          solution: 'Engineered a bold, research-driven brand language focused on data and expressive visuals.'
+          challenge: 'Build an agency from scratch: set the design standard and keep the client pipeline healthy.',
+          solution: 'A bold brand language for the studio itself, backed by research and expressive visuals.'
         },
         themeClass: 'theme-emerald-teal',
         img: 'Floating project icons jpg/Kala Curry.jpg',
       
         gallery: [
         {
-          label: 'Kalacurry Carousel',
+          label: 'Carousel 01',
           images: ['project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 1.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 2.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 3.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 4.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 5.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 6.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 7.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel/carousel 1 page 8.jpg']
         },
         {
-          label: 'Kalacurry Carousel (1)',
+          label: 'Carousel 02',
           images: ['project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 1.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 2.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 3.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 4.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 5.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 6.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 7.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 8.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (1)/carousel 2 page 9.jpg']
         },
         {
-          label: 'Kalacurry Carousel (2)',
+          label: 'Carousel 03',
           images: ['project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (2)/carousel 3 page 1.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (2)/carousel 3 page 2.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (2)/carousel 3 page 3.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (2)/carousel 3 page 4.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (2)/carousel 3 page 5.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (2)/carousel 3 page 6.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (2)/carousel 3 page 7.jpg']
         },
         {
-          label: 'Kalacurry Carousel (3)',
+          label: 'Carousel 04',
           images: ['project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (3)/carousel 4 page 1.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (3)/carousel 4 page 2.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (3)/carousel 4 page 3.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (3)/carousel 4 page 4.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (3)/carousel 4 page 5.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (3)/carousel 4 page 6.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (3)/carousel 4 page 7.jpg']
         },
         {
-          label: 'Kalacurry Carousel (4)',
+          label: 'Carousel 05',
           images: ['project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (4)/carousel 5 page 1.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (4)/carousel 5 page 2.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (4)/carousel 5 page 3.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (4)/carousel 5 page 4.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (4)/carousel 5 page 5.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (4)/carousel 5 page 6.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (4)/carousel 5 page 7.jpg']
         },
         {
-          label: 'Kalacurry Carousel (5)',
+          label: 'Carousel 06',
           images: ['project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (5)/carousel 6 page 1.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (5)/carousel 6 page 2.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (5)/carousel 6 page 3.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (5)/carousel 6 page 4.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (5)/carousel 6 page 5.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (5)/carousel 6 page 6.jpg', 'project_creatives/kala-curry/kalacurry creatives/kalacurry carousel (5)/carousel 6 page 7.jpg']
         }
       ],
@@ -3762,18 +3904,18 @@
         client: 'Product Manager Personal Spec',
         year: '2026',
         tags: ['Professional Carousels', 'Thought Leadership', 'Personal Brand'],
-        description: 'A Product Manager with real depth needed a LinkedIn presence to match. Thought leadership that didn\'t feel like corporate noise.',
+        description: 'A product manager with real depth needed a LinkedIn presence to match. Thought leadership that doesn\'t read like corporate noise.',
         deliverables: ['Strategic series of professional creatives and carousel layouts for linkedin'],
         projectBrief: {
-          challenge: 'Re-packaging tech product insights into visually compelling, easy-to-digest professional carousels that stand out.',
-          solution: 'Created clean, blueprint-style layouts with strong typography and high-value infographic components.'
+          challenge: 'Turn dense product insights into carousels people actually stop scrolling for.',
+          solution: 'Clean, blueprint-style layouts with strong type and simple infographics.'
         },
         themeClass: 'theme-minimal-dark',
         img: 'Floating project icons jpg/LinkedIn Posts.jpg',
       
         gallery: [
         {
-          label: 'Linkedin Carousel 1 (Square)',
+          label: 'Carousel 01',
           aspectRatio: '1 / 1',
           images: [
             'project_creatives/linkedin-posts/linkedin creatives/linkedin carousel 1/linkedin carousel 1 page 1.jpg',
@@ -3786,7 +3928,7 @@
           ]
         },
         {
-          label: 'Linkedin Carousel 2 (Square)',
+          label: 'Carousel 02',
           aspectRatio: '1 / 1',
           images: [
             'project_creatives/linkedin-posts/linkedin creatives/linkedin carousel 2/linkedin carousel 2 page 1.jpg',
@@ -3798,7 +3940,7 @@
           ]
         },
         {
-          label: 'Linkedin Carousel 3',
+          label: 'Carousel 03',
           images: [
             'project_creatives/linkedin-posts/linkedin creatives/linkedin carousel 3/linkedin carousel 5 page 1.png',
             'project_creatives/linkedin-posts/linkedin creatives/linkedin carousel 3/linkedin carousel 5 page 2.png',
@@ -3810,7 +3952,7 @@
           ]
         },
         {
-          label: 'Linkedin Carousel 4 (Square)',
+          label: 'Carousel 04',
           aspectRatio: '1 / 1',
           images: [
             'project_creatives/linkedin-posts/linkedin creatives/linkedin carousel 4/linkedin carousel 3 page 1.jpg',
@@ -3820,7 +3962,7 @@
           ]
         },
         {
-          label: 'Linkedin Carousel 5',
+          label: 'Carousel 05',
           images: [
             'project_creatives/linkedin-posts/linkedin creatives/linkedin carousel 5/linkedin carousel 4 page 1.jpg',
             'project_creatives/linkedin-posts/linkedin creatives/linkedin carousel 5/linkedin carousel 4 page 2.jpg',
@@ -3839,22 +3981,22 @@
         client: 'Regional Marble Manufacturers',
         year: '2025',
         tags: ['Branding', 'Social Media', 'Sales Campaigns'],
-        description: 'Regional marble manufacturers with serious craft but no digital presence. The goal was to make them look as premium as the stone they sell and bring in real business.',
+        description: 'Regional marble makers with serious craft and zero digital presence. The job: make them look as premium as the stone they sell.',
         deliverables: ['Full visual identity', 'Social media management', 'Meta sales campaigns that actually moved the needle on revenue'],
         projectBrief: {
-          challenge: 'Digital transformation and brand positioning for a highly traditional B2B marble manufacturer.',
-          solution: 'Crafted a clean, high-contrast visual brand emphasizing blocky shapes, stone veins, and structural elegance.'
+          challenge: 'Take a very traditional B2B business online without losing its weight.',
+          solution: 'A clean, high-contrast brand built on blocky shapes, stone veins and structure.'
         },
         themeClass: 'theme-luxury-gold',
         img: 'Floating project icons jpg/Marble Industry.jpg',
       
         gallery: [
         {
-          label: 'Marble Industry Carousel 1',
+          label: 'Carousel 01',
           images: ['project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 1/marble carouseel1 page1.jpg', 'project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 1/marble carouseel1 page2.jpg', 'project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 1/marble carouseel1 page3.jpg', 'project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 1/marble carouseel1 page5.jpg', 'project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 1/marble carouseel1 page6.jpg', 'project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 1/marble carouseel1 page7.jpg', 'project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 1/marble carouseel1 page8.jpg']
         },
         {
-          label: 'Marble Industry Carousel 2',
+          label: 'Carousel 02',
           images: ['project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 2/marble carouseel2 page1.jpg', 'project_creatives/marble-industry/Marble industry creatives/Marble industry carousel 2/marble carouseel2 page2.jpg']
         }
       ],
@@ -3866,34 +4008,34 @@
         client: 'Next Step Career Consultants',
         year: '2025',
         tags: ['Social Media', 'Lead Gen', 'Campaign Design'],
-        description: 'A career consultancy helping students and young professionals figure out their next move. Needed to feel trustworthy without feeling corporate.',
+        description: 'A career consultancy for students and young professionals figuring out their next move. It had to feel trustworthy, not corporate.',
         deliverables: ['Social media presence and meta lead generation campaigns that drove qualified inquiries'],
         projectBrief: {
-          challenge: 'Re-positioning career advisory services into an approachable, modern digital brand that drives sign-ups.',
-          solution: 'Designed clean, friendly infographics with modern pastel backdrops and positive, clear typographic messaging.'
+          challenge: 'Make career advice feel friendly and modern, enough that people actually sign up.',
+          solution: 'Friendly infographics, soft pastel backgrounds and clear, positive type.'
         },
         themeClass: 'theme-royal-blue',
         img: 'Floating project icons jpg/Next Step.jpg',
       
         gallery: [
         {
-          label: 'Next Step (3)',
+          label: 'Carousel 01',
           images: ['project_creatives/next-step/Nextstep creatives/next step (3)/nextstep carousel 4 page 1.jpg', 'project_creatives/next-step/Nextstep creatives/next step (3)/nextstep carousel 4 page 2.jpg']
         },
         {
-          label: 'Next Step1',
+          label: 'Carousel 02',
           images: ['project_creatives/next-step/Nextstep creatives/next step1/nextstep carousel 1 page 1.jpg', 'project_creatives/next-step/Nextstep creatives/next step1/nextstep carousel 1 page 2.jpg', 'project_creatives/next-step/Nextstep creatives/next step1/nextstep carousel 1 page 3.jpg']
         },
         {
-          label: 'Next Step2',
+          label: 'Carousel 03',
           images: ['project_creatives/next-step/Nextstep creatives/next step2/nextstep carousel 2 page 1.jpg', 'project_creatives/next-step/Nextstep creatives/next step2/nextstep carousel 2 page 2.jpg']
         },
         {
-          label: 'Next Step3',
+          label: 'Carousel 04',
           images: ['project_creatives/next-step/Nextstep creatives/next step3/nextstep carousel 3 page 1.jpg', 'project_creatives/next-step/Nextstep creatives/next step3/nextstep carousel 3 page 2.jpg']
         },
         {
-          label: 'Next Step5',
+          label: 'Carousel 05',
           images: ['project_creatives/next-step/Nextstep creatives/next step5/nextstep carousel 5 page 1.jpg', 'project_creatives/next-step/Nextstep creatives/next step5/nextstep carousel 5 page 2.jpg']
         }
       ],
@@ -3905,11 +4047,11 @@
         client: 'One Earth Pushkar',
         year: '2025',
         tags: ['IP Identity', 'Branding', 'Minimalist Design'],
-        description: 'A community IP at an eco-living cafe in Pushkar. Slow living, meditation, organic food, ambient music. The opposite of everything else on this list and just as intentional.',
+        description: 'A community IP at an eco-living café in Pushkar. Slow living, meditation, organic food, ambient music. The opposite of everything else on this desktop, and just as intentional.',
         deliverables: ['Complete ip identity and all branding touchpoints across every platform'],
         projectBrief: {
-          challenge: 'Crafting a calm, minimalistic visual identity that highlights organic sustainability without looking generic.',
-          solution: 'Used a natural, earth-toned color palette, simple leaf vectors, and elegant serif typography.'
+          challenge: 'Calm and minimal, without looking like every other \'sustainable\' brand.',
+          solution: 'Earth tones, simple leaf marks and an elegant serif.'
         },
         themeClass: 'theme-forest-green',
         img: 'Floating project icons jpg/One Earth.jpg',
@@ -3928,65 +4070,65 @@
         client: 'Ourrx Care',
         year: '2025',
         tags: ['UI/UX Design', 'App Mockup', 'Healthcare UI'],
-        description: 'A digital healthcare application simplifying patient records, medicine orders, and consultation bookings for the Indian market.',
+        description: 'A healthcare app for India: patient records, medicine orders and doctor bookings in one place, for every age group.',
         deliverables: ['User experience architecture', 'High-fidelity app mockups', 'Interaction flows'],
         projectBrief: {
-          challenge: 'Creating an intuitive, accessible interface for a complex medical ecosystem serving diverse age groups.',
-          solution: 'Designed a clean, accessibility-first UI featuring large tap targets, high-contrast layouts, and helpful micro-copy.'
+          challenge: 'A complex medical system that anyone, of any age, can use without asking for help.',
+          solution: 'Accessibility first. Big tap targets, high contrast, and helpful little bits of copy along the way.'
         },
         themeClass: 'theme-royal-blue',
         img: 'Floating project icons jpg/Ourrx.jpg',
       
         gallery: [
         {
-          label: 'Ourrx Carousel1 (Square)',
+          label: 'Carousel 01',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel1/Ourrx carousel1 page 1.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel1/Ourrx carousel1 page 2.jpg']
         },
         {
-          label: 'Ourrx Carousel10 (Square)',
-          aspectRatio: '1 / 1',
-          images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel10/Ourrx carousel10 page 2.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel10/Ourrx carousel10page 3.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel10/Ourrx carousel7page 1.jpg']
-        },
-        {
-          label: 'Ourrx Carousel2 (Square)',
+          label: 'Carousel 02',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel2/Ourrx carousel2 page 1.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel2/Ourrx carousel2 page 2.jpg']
         },
         {
-          label: 'Ourrx Carousel3 (Square)',
+          label: 'Carousel 03',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel3/Ourrx carousel3 page 1.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel3/Ourrx carousel3 page 2.jpg']
         },
         {
-          label: 'Ourrx Carousel4 (Square)',
+          label: 'Carousel 04',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel4/Ourrx carousel4page 1.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel4/Ourrx carousel4page 2.jpg']
         },
         {
-          label: 'Ourrx Carousel5 (Square)',
+          label: 'Carousel 05',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel5/Ourrx carousel5 page 1.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel5/Ourrx carousel5page 2.jpg']
         },
         {
-          label: 'Ourrx Carousel6 (Square)',
+          label: 'Carousel 06',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel6/Ourrx carousel6page 2.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel6/Ourrx carousel7page 1.jpg']
         },
         {
-          label: 'Ourrx Carousel7 (Square)',
+          label: 'Carousel 07',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel7/Ourrx carousel6page 2.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel7/Ourrx carousel7page 1.jpg']
         },
         {
-          label: 'Ourrx Carousel8 (Square)',
+          label: 'Carousel 08',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel8/Ourrx carouse 8 page 1.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel8/Ourrx carouse8 page 2.jpg']
         },
         {
-          label: 'Ourrx Carousel9 (Square)',
+          label: 'Carousel 09',
           aspectRatio: '1 / 1',
           images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel9/Ourrx carousel9 page 1.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel9/Ourrx carousel9 page 2.jpg']
+        },
+        {
+          label: 'Carousel 10',
+          aspectRatio: '1 / 1',
+          images: ['project_creatives/ourrx/Ourrx creatives/Ourrx carousel10/Ourrx carousel10 page 2.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel10/Ourrx carousel10page 3.jpg', 'project_creatives/ourrx/Ourrx creatives/Ourrx carousel10/Ourrx carousel7page 1.jpg']
         }
       ],
       },
@@ -3997,46 +4139,46 @@
         client: 'Party Plug India',
         year: '2025',
         tags: ['Branding', 'Poster Design', 'Event Promotion'],
-        description: 'India\'s electronic music scene needed a platform that could match its energy. Party Plug is exactly that. A promotional powerhouse built for large-scale festivals and a youth audience that lives for the night.',
+        description: 'India\'s electronic music scene needed a platform with matching energy. Party Plug is that: a promo powerhouse for big festivals and a crowd that lives for the night.',
         deliverables: ['End-to-end visual branding', 'High-impact event posters', 'Social layouts', 'Video editing'],
         projectBrief: {
-          challenge: 'Launch a highly energetic music platform branding that instantly grabs the attention of festival-goers.',
-          solution: 'Developed a bold, neon-saturated identity using aggressive layouts, glowing borders, and modern sans-serif fonts.'
+          challenge: 'Launch a music platform that festival-goers notice in half a second.',
+          solution: 'Loud, neon-saturated branding with aggressive layouts, glowing borders and modern sans-serifs.'
         },
         themeClass: 'theme-neon-orange',
         img: 'Floating project icons jpg/Party Plug India.jpg',
       
         gallery: [
         {
-          label: 'C1',
+          label: 'Carousel 01',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c1/PP1carousal1.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c1/PP2carousal1.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c1/PP3carousal1.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c1/PP4carousal1.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c1/PP5carousal1.jpg']
         },
         {
-          label: 'C2',
+          label: 'Carousel 02',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c2/PP1carousal2.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c2/PP2carousal2.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c2/PP3carousal2.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c2/PP4carousal2.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c2/PP5carousal2.jpg']
         },
         {
-          label: 'C3',
+          label: 'Carousel 03',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c3/PP1carousal3.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c3/PP2carousal3.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c3/PP3carousal3.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c3/PP4carousal3.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c3/PP5carousal3.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c3/PP6carousal3.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c3/PP7carousal3.jpg']
         },
         {
-          label: 'C4',
+          label: 'Carousel 04',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c4/PP1carousal4.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c4/PP2carousal4.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c4/PP3carousal4.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c4/PP4carousal4.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c4/PP5carousal4.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c4/PP6carousal4.jpg']
         },
         {
-          label: 'C5',
+          label: 'Carousel 05',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c5/PP1carousal5.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c5/PP2carousal5.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c5/PP3carousal5.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c5/PP4carousal5.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c5/PP5carousal5.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c5/PP6carousal5.jpg']
         },
         {
-          label: 'C6',
+          label: 'Carousel 06',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c6/PP1carousal6.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c6/PP2carousal6.jpg']
         },
         {
-          label: 'C7',
+          label: 'Carousel 07',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c7/PP1carousal7.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c7/PP2carousal7.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c7/PP3carousal7.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c7/PP4carousal7.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c7/PP5carousal7.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c7/PP6carousal7.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c7/PP7carousal7.jpg']
         },
         {
-          label: 'C8',
+          label: 'Carousel 08',
           images: ['project_creatives/party-plug-india/Partyplug creatives/c8/PP1carousal8.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c8/PP2carousal8.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c8/PP3carousal8.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c8/PP4carousal8.jpg', 'project_creatives/party-plug-india/Partyplug creatives/c8/PP5carousal8.jpg']
         }
       ],
@@ -4048,40 +4190,40 @@
         client: 'Perfcount IT Consulting',
         year: '2026',
         tags: ['Brand Identity', 'Corporate Design', 'LinkedIn Content'],
-        description: 'A serious Indian software testing and IT consulting firm that needed LinkedIn to take them seriously too. Technical expertise, translated into authority.',
+        description: 'A serious software testing firm that needed LinkedIn to take it seriously too. Deep technical skill, finally looking the part.',
         deliverables: ['Brand identity and corporate creatives optimised for linkedin engagement'],
         projectBrief: {
-          challenge: 'Transform complex, dry software testing consulting content into premium corporate social designs.',
-          solution: 'Engineered a clean blueprint-themed corporate visual system with sharp grids, tech-blue tones, and structured cards.'
+          challenge: 'Make dry testing and consulting content look premium.',
+          solution: 'A blueprint-style system with sharp grids, tech blues and tidy content cards.'
         },
         themeClass: 'theme-royal-blue',
         img: 'Floating project icons jpg/Perfcount.jpg',
       
         gallery: [
         {
-          label: 'Perfcount Carousels1 (Square)',
+          label: 'Carousel 01',
           aspectRatio: '1 / 1',
           images: ['project_creatives/perfcount/perfcount creatives/perfcount carousels1/perfcount carousel 1 page 1.jpg', 'project_creatives/perfcount/perfcount creatives/perfcount carousels1/perfcount carousel 1 page 2.jpg']
         },
         {
-          label: 'Perfcount Carousels2',
+          label: 'Carousel 02',
           images: ['project_creatives/perfcount/perfcount creatives/perfcount carousels2/perfcount carousel 2 page 1.jpg', 'project_creatives/perfcount/perfcount creatives/perfcount carousels2/perfcount carousel 2 page 2.jpg']
         },
         {
-          label: 'Perfcount Carousels3',
+          label: 'Carousel 03',
           images: ['project_creatives/perfcount/perfcount creatives/perfcount carousels3/perfcount carousel 3 page 1.jpg', 'project_creatives/perfcount/perfcount creatives/perfcount carousels3/perfcount carousel 3 page 2.jpg']
         },
         {
-          label: 'Perfcount Carousels4 (Square)',
+          label: 'Carousel 04',
           aspectRatio: '1 / 1',
           images: ['project_creatives/perfcount/perfcount creatives/perfcount carousels4/perfcount carousel 4 page 1.jpg', 'project_creatives/perfcount/perfcount creatives/perfcount carousels4/perfcount carousel 4 page 2.jpg']
         },
         {
-          label: 'Perfcount Carousels5',
+          label: 'Carousel 05',
           images: ['project_creatives/perfcount/perfcount creatives/perfcount carousels5/perfcount carousel 5 page 1.jpg', 'project_creatives/perfcount/perfcount creatives/perfcount carousels5/perfcount carousel 5 page 2.jpg']
         },
         {
-          label: 'Perfcount Carousels6 (Square)',
+          label: 'Carousel 06',
           aspectRatio: '1 / 1',
           images: ['project_creatives/perfcount/perfcount creatives/perfcount carousels6/perfcount carousel 6 page 1.jpg', 'project_creatives/perfcount/perfcount creatives/perfcount carousels6/perfcount carousel 6 page 2.jpg', 'project_creatives/perfcount/perfcount creatives/perfcount carousels6/perfcount carousel 6 page 3.jpg']
         }
@@ -4094,11 +4236,11 @@
         client: 'Active Sports IP',
         year: '2026',
         tags: ['Experiential Design', 'Event Identity', 'Streetwear'],
-        description: 'An unexpected crossover event: pickleball tournaments during the day, high-energy techno stages during the night. A lifestyle concept built for active urban communities.',
+        description: 'Pickleball tournaments by day, techno by night. Sounds random. Works surprisingly well.',
         deliverables: ['Event identity', 'Social media rollout assets', 'Jersey graphics', 'Stage design artwork'],
         projectBrief: {
-          challenge: 'Bridge athletic competition with underground nightlife subculture aesthetics in a unified brand system.',
-          solution: 'Created a neon-yellow and concrete-grey visual concept, featuring industrial shapes and athletic typography.'
+          challenge: 'One brand that works on a sports court and on a dance floor.',
+          solution: 'Neon yellow and concrete grey, industrial shapes, and athletic type on the jerseys and the stage.'
         },
         themeClass: 'theme-cyber-punk',
         img: 'Floating project icons jpg/Pickleball x Techno.jpg',
@@ -4117,11 +4259,11 @@
         client: 'Party Plug India',
         year: '2025',
         tags: ['Podcast IP', 'Audio-Visual', 'Launch Templates'],
-        description: 'Party Plug needed a media arm. Plugcast became that. A podcast IP built to put artists and fans in the same conversation through interviews, insights, and industry talk.',
+        description: 'Party Plug needed a media arm. PlugCast became that: a podcast where artists and fans end up in the same conversation.',
         deliverables: ['Core ip identity', 'Launch assets', 'Recurring episode templates'],
         projectBrief: {
-          challenge: 'Launch a multi-platform audio-visual talk show for music creators that feels premium and subculturally relevant.',
-          solution: 'Designed dark, ambient digital backdrops with neon audio waves and clean blocky layouts for episode cards.'
+          challenge: 'A talk show for music people that feels premium and actually part of the scene.',
+          solution: 'Dark ambient backdrops, neon sound waves and blocky episode cards you can spot instantly.'
         },
         themeClass: 'theme-cosmic-indigo',
         img: 'Floating project icons jpg/PlugCast.jpg',
@@ -4134,32 +4276,32 @@
       ],
       },
       'potography': {
-        title: 'Potography',
+        title: 'Photography',
         subtitle: 'Photographic Collection',
         role: 'Photographer & Layout Curator',
         client: 'Personal Exhibition',
         year: '2025',
         tags: ['Photography', 'Editorial', 'Visual Curation'],
-        description: 'A personal archive of high-contrast street photography, concert captures, and architectural forms. Exploring shadows, grain, and high-contrast layouts.',
+        description: 'My own camera roll, the good parts. Streets, concerts and buildings, shot in high contrast with plenty of grain.',
         deliverables: ['Exhibition photo curation', 'Editorial layout design', 'Print posters'],
         projectBrief: {
-          challenge: 'Capturing the raw textures of underground dancefloors, brutalist landscapes, and urban spaces in a cohesive edit.',
-          solution: 'Curated a high-contrast black-and-white series utilizing film grain shaders and structural grid designs.'
+          challenge: 'Make dancefloors, brutalist buildings and city streets feel like one body of work.',
+          solution: 'A black-and-white edit with film grain, laid out on a strict grid.'
         },
         themeClass: 'theme-minimal-dark',
         img: 'Floating project icons jpg/Potography.jpg',
       
         gallery: [
         {
-          label: 'Photography Carousel1',
+          label: 'Carousel 01',
           images: ['project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 1.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 2.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 4.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 5.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 6.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 7.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 8.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Photography carousel 1 page 9.jpg', 'project_creatives/potography/photography creatives/photography carousel1/Still buzzing from the surge of Alarm of Dome_ Voltage 5 where we experienced a total system overload and proved once again that we donΓÇÖt just survive the morning we own it. This is where the daylight meets the drive and to the crowd that broug.jpg']
         },
         {
-          label: 'Photography Carousel2',
+          label: 'Carousel 02',
           images: ['project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 1.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 10.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 11.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 2.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 3.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 4.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 5.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 6.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 7.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 8.jpg', 'project_creatives/potography/photography creatives/photography carousel2/Photography carousel 2 page 9.jpg']
         },
         {
-          label: 'Photography Carousel3',
+          label: 'Carousel 03',
           images: ['project_creatives/potography/photography creatives/photography carousel3/Photography carousel 3 page 1.jpg', 'project_creatives/potography/photography creatives/photography carousel3/Photography carousel 3 page 2.jpg', 'project_creatives/potography/photography creatives/photography carousel3/Photography carousel 3 page 3.jpg', 'project_creatives/potography/photography creatives/photography carousel3/Photography carousel 3 page 4.jpg', 'project_creatives/potography/photography creatives/photography carousel3/Photography carousel 3 page 5.jpg', 'project_creatives/potography/photography creatives/photography carousel3/Photography carousel 3 page 6.jpg', 'project_creatives/potography/photography creatives/photography carousel3/Photography carousel 3 page 7.jpg']
         }
       ],
@@ -4171,46 +4313,46 @@
         client: 'Psy Culture India',
         year: '2025',
         tags: ['Media Platform', 'Art Curation', 'Subculture Branding'],
-        description: 'A dedicated media platform for psychedelic trance. Connecting organisers, building community, and keeping the culture alive digitally.',
+        description: 'A media platform for psychedelic trance in India. It connects organisers, builds the community and keeps the culture alive online.',
         deliverables: ['Full social media strategy', 'Digital creatives', 'Subcultural aesthetic direction'],
         projectBrief: {
-          challenge: 'Maintain a visually engaging and cohesive identity for India\'s psychedelic trance subculture online.',
-          solution: 'Created vibrant neon layouts featuring sacred geometry patterns, trippy typography, and dark space backdrops.'
+          challenge: 'Keep a big psytrance community\'s feed bright, trippy and consistent.',
+          solution: 'Neon layouts, sacred geometry, trippy type and deep-space backgrounds.'
         },
         themeClass: 'theme-cyber-punk',
         img: 'Floating project icons jpg/Psy Culture India.jpg',
       
         gallery: [
         {
-          label: 'Pci 1',
+          label: 'Carousel 01',
           images: ['project_creatives/psy-culture-india/PCI creatives1/PCI 1/C1PCI1.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 1/C1PCI2.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 1/C1PCI3.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 1/C1PCI4.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 1/C1PCI5.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 1/C1PCI6.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 1/C1PCI7.jpg']
         },
         {
-          label: 'Pci 2',
+          label: 'Carousel 02',
           images: ['project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI1.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI10.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI2.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI3.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI4.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI5.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI6.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI7.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI8.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 2/C2PCI9.jpg']
         },
         {
-          label: 'Pci 3',
+          label: 'Carousel 03',
           images: ['project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI1.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI10.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI2.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI3.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI4.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI5.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI6.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI7.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI8.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 3/C3PCI9.jpg']
         },
         {
-          label: 'Pci 4',
+          label: 'Carousel 04',
           images: ['project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI1.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI2.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI3.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI4.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI5.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI6.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI7.jpg', 'project_creatives/psy-culture-india/PCI creatives1/PCI 4/C4PCI8.jpg']
         },
         {
-          label: 'Pci 5',
+          label: 'Carousel 05',
           images: ['project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI1.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI2.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI3.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI4.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI5.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI6.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI7.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 5/C5PCI8.jpg']
         },
         {
-          label: 'Pci 6',
+          label: 'Carousel 06',
           images: ['project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI1.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI2.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI3.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI4.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI5.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI6.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI7-1.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 6/C6PCI7.jpg']
         },
         {
-          label: 'Pci 7',
+          label: 'Carousel 07',
           images: ['project_creatives/psy-culture-india/PCI creatives2/PCI 7/C7PCI1.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 7/C7PCI2.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 7/C7PCI3.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 7/C7PCI4.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 7/C7PCI5.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 7/C7PCI6.jpg', 'project_creatives/psy-culture-india/PCI creatives2/PCI 7/C7PCI7.jpg']
         },
         {
-          label: 'Pci 8',
+          label: 'Carousel 08',
           images: [
             'project_creatives/psy-culture-india/PCI creatives2/PCI 8/C8PCI1.jpg',
             'project_creatives/psy-culture-india/PCI creatives2/PCI 8/C8PCI2.jpg',
@@ -4231,11 +4373,11 @@
         client: 'Qila Ritual',
         year: '2025',
         tags: ['IP Branding', 'Event Visuals', 'Video Editing'],
-        description: 'The second edition. Same fortress walls, same uncompromised techno. Bigger, sharper, and with more to prove.',
+        description: 'The second edition. Same fortress walls, same uncompromising techno. Bigger, sharper, and with more to prove.',
         deliverables: ['Full ip branding', 'All visual assets', 'Promotional video direction and editing'],
         projectBrief: {
-          challenge: 'Elevate the visual identity of a successful fortress music property, pushing the aesthetic to feel more premium.',
-          solution: 'Used a crimson-red color scheme, high-end architectural overlays, and faster, glitchier motion graphics in video cuts.'
+          challenge: 'Take a fort techno night that already worked and make it feel more premium.',
+          solution: 'Crimson red, refined architectural overlays and faster, glitchier video edits.'
         },
         themeClass: 'theme-crimson-red',
         img: 'Floating project icons jpg/Qila Ritual 2.jpg',
@@ -4254,30 +4396,30 @@
         client: 'Qila Ritual',
         year: '2025',
         tags: ['IP Branding', 'Video Direction', 'Event Design'],
-        description: 'Ancient Rajasthani forts. Brutal techno. Winter 2025. Qila Ritual was built to be a contradiction that works. Heritage walls meets underground culture.',
+        description: 'Ancient Rajasthani forts. Brutal techno. Winter 2025. Qila Ritual was built as a contradiction that works: heritage walls meet underground culture.',
         deliverables: ['End-to-end ip branding', 'All visual assets', 'Promotional video direction and editing'],
         projectBrief: {
-          challenge: 'Create an event identity that merges traditional ancient Rajasthani architecture with modern brutalist techno.',
-          solution: 'Designed visual elements featuring high-contrast fort shadows, stone textures, and industrial wireframes.'
+          challenge: 'Merge centuries-old fort architecture with modern, brutal techno.',
+          solution: 'Hard fort shadows, stone textures and industrial wireframes.'
         },
         themeClass: 'theme-crimson-red',
         img: 'Floating project icons jpg/Qila Ritual.jpg',
       
         gallery: [
         {
-          label: 'Carousel 1',
+          label: 'Carousel 01',
           images: ['project_creatives/qila-ritual/qila ritual 1 creatives/carousel 1/ carousel 1 qr 1.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 1/ carousel 1 qr 2.jpg']
         },
         {
-          label: 'Carousel 2',
+          label: 'Carousel 02',
           images: ['project_creatives/qila-ritual/qila ritual 1 creatives/carousel 2/ carousel 2 qr 1.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 2/ carousel 2 qr 2.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 2/ carousel 2 qr 3.jpg']
         },
         {
-          label: 'Carousel 3',
+          label: 'Carousel 03',
           images: ['project_creatives/qila-ritual/qila ritual 1 creatives/carousel 3/ carousel 3 qr 1.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 3/ carousel 3 qr 2.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 3/ carousel 3 qr 3.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 3/ carousel 3 qr 4.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 3/ carousel 3 qr 5.jpg']
         },
         {
-          label: 'Carousel 4',
+          label: 'Carousel 04',
           images: ['project_creatives/qila-ritual/qila ritual 1 creatives/carousel 4/ carousel 4 qr 1.jpg', 'project_creatives/qila-ritual/qila ritual 1 creatives/carousel 4/ carousel 4 qr 2.jpg']
         }
       ],
@@ -4289,17 +4431,17 @@
         client: 'Rave Culture India',
         year: '2025',
         tags: ['Community Management', 'Posters', 'Video Recaps'],
-        description: 'One of India\'s go-to platforms for underground electronic music. Part media, part community, part event collective. The scene\'s digital home.',
+        description: 'One of India\'s go-to platforms for underground electronic music, with 2.5 lakh+ followers. Part media, part community, part event collective.',
         deliverables: ['Full social media management', 'Event ips', 'Posters', 'Ad campaigns', 'Party video recaps'],
         projectBrief: {
-          challenge: 'Build a unified and recognizable digital home for India\'s underground techno and house music community.',
-          solution: 'Implemented a strict dark-mode feed style, featuring bold sans-serif fonts, raw flash party clips, and grid borders.'
+          challenge: 'Give the scene one consistent, recognisable home online.',
+          solution: 'A strict dark feed: bold sans-serifs, raw flash party clips and grid borders.'
         },
         themeClass: 'theme-cyber-punk',
         img: 'Floating project icons jpg/Rave Culture India.jpg',
         gallery: [
           {
-            label: 'Rci1',
+            label: 'Carousel 01',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI1/C1RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI1/C1RCI2.jpg',
@@ -4308,7 +4450,7 @@
             ]
           },
           {
-            label: 'Rci2',
+            label: 'Carousel 02',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI2/C2RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI2/C2RCI2.jpg',
@@ -4321,7 +4463,7 @@
             ]
           },
           {
-            label: 'Rci3',
+            label: 'Carousel 03',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI3/C3RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI3/C3RCI2.jpg',
@@ -4331,7 +4473,7 @@
             ]
           },
           {
-            label: 'Rci4',
+            label: 'Carousel 04',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI4/C4RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI4/C4RCI2.jpg',
@@ -4344,7 +4486,7 @@
             ]
           },
           {
-            label: 'Rci5',
+            label: 'Carousel 05',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI5/C5RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI5/C5RCI2.jpg',
@@ -4355,7 +4497,7 @@
             ]
           },
           {
-            label: 'Rci6',
+            label: 'Carousel 06',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI6/C6RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI6/C6RCI2.jpg',
@@ -4367,7 +4509,7 @@
             ]
           },
           {
-            label: 'Rci7',
+            label: 'Carousel 07',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI7/C7RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI7/C7RCI2.jpg',
@@ -4380,7 +4522,7 @@
             ]
           },
           {
-            label: 'Rci8',
+            label: 'Carousel 08',
             images: [
               'project_creatives/rave-culture-india/RCI creatives/RCI8/C8RCI1.jpg',
               'project_creatives/rave-culture-india/RCI creatives/RCI8/C8RCI2.jpg',
@@ -4400,11 +4542,11 @@
         client: 'Roast & Rave',
         year: '2025',
         tags: ['Event Layout', 'Visual Identity', 'Digital Assets'],
-        description: 'Morning coffee and electronic music sounds odd until it doesn\'t. Roast and Rave is a daylight concept that soundtracks your espresso with deep house and minimal techno.',
+        description: 'Morning coffee and electronic music sounds odd until it doesn\'t. Roast & Rave is a daytime concept that soundtracks your espresso with deep house and minimal techno.',
         deliverables: ['Complete event layout', 'Visual identity', 'All digital promotional assets'],
         projectBrief: {
-          challenge: 'Synthesize the slow lifestyle of specialty coffee with the high-energy flow of day-time electronic music.',
-          solution: 'Curated a visual style featuring warm espresso colors mixed with modern tech line art.'
+          challenge: 'Slow coffee culture meets daytime dance music.',
+          solution: 'Warm espresso colours with modern tech line art.'
         },
         themeClass: 'theme-warm-amber',
         img: 'Floating project icons jpg/Roast and Rave.jpg',
@@ -4423,11 +4565,11 @@
         client: 'Sands of Sound',
         year: '2025',
         tags: ['Desert Festival', 'Event Identity', 'Art Installations'],
-        description: 'A boutique desert festival concept. Think Magnetic Fields energy but with its own visual language. Electronic music, art installations, and a stark desert landscape doing the heavy lifting.',
+        description: 'A boutique desert festival concept. Magnetic Fields energy, with its own visual language. Electronic music, art installations, and the desert doing the heavy lifting.',
         deliverables: ['Complete event identity and all digital and print promotional creatives'],
         projectBrief: {
-          challenge: 'Design a festival identity that showcases both ambient desert beauty and cutting-edge electronic art.',
-          solution: 'Used cosmic indigo sky gradients, golden desert textures, and geometric vector lines.'
+          challenge: 'Show off both the calm of the desert and the electronic art.',
+          solution: 'Indigo night-sky gradients, golden sand textures and geometric lines.'
         },
         themeClass: 'theme-cosmic-indigo',
         img: 'Floating project icons jpg/Sands of Sound.jpg',
@@ -4446,11 +4588,11 @@
         client: 'Sandstorm Festival',
         year: '2026',
         tags: ['Creative Direction', 'Video Direction', 'Event Visuals'],
-        description: 'Sandstorm brought its open-air signature to Udaipur. Summer 2026, a heritage fortress backdrop, and a lineup headlined by Tech Panda and Kenzani. Big edition.',
+        description: 'Sandstorm brought its open-air signature to Udaipur. Summer 2026, a heritage fort backdrop, and a lineup headlined by Tech Panda and Kenzani. Big edition.',
         deliverables: ['Full creative direction', 'All event visuals', 'Promotional video direction and editing'],
         projectBrief: {
-          challenge: 'Branding a major heritage fortress open-air concert featuring prominent Indian electronic acts under a tight schedule.',
-          solution: 'Crafted dynamic, high-saturation red and orange templates combining fort arches with lightning vectors.'
+          challenge: 'Brand a major open-air fort show with big Indian electronic acts, on a tight schedule.',
+          solution: 'High-saturation reds and oranges, fort arches and lightning bolts.'
         },
         themeClass: 'theme-crimson-red',
         img: 'Floating project icons jpg/Sandstorm festival.jpg',
@@ -4469,11 +4611,11 @@
         client: 'Sound Temple Festival',
         year: '2025',
         tags: ['Festival Identity', 'Poster Design', 'Psytrance'],
-        description: 'A psytrance festival in the Himachal mountains with the soul of Rishikesh running through it. Spiritual, high-energy, and deeply atmospheric.',
+        description: 'A psytrance festival in the Himachal mountains with the soul of Rishikesh running through it. Spiritual, loud and deeply atmospheric.',
         deliverables: ['Full festival identity and all digital and print event creatives'],
         projectBrief: {
-          challenge: 'Capture the dual spiritual and high-energy electronic nature of a mountain psytrance rave.',
-          solution: 'Combined high-contrast neon blues and purples with classical Indian motifs and mountain shapes.'
+          challenge: 'Spiritual and high-energy at the same time.',
+          solution: 'Neon blues and purples with classical Indian motifs and mountain silhouettes.'
         },
         themeClass: 'theme-cosmic-indigo',
         img: 'Floating project icons jpg/Sound Temple.jpg',
@@ -4496,18 +4638,18 @@
         client: 'Solo Production',
         year: '2025',
         tags: ['Event Concept', 'Experiential Design', 'Visual Direction'],
-        description: 'Self-produced. Holi 2025. Jungles of Pushkar. Hard techno, Indian rhythms, and mantra-infused electronic music colliding in one space. A personal experiment in sound and culture.',
+        description: 'Self-produced. Holi 2025. The jungles of Pushkar. Hard techno, Indian rhythms and mantra-laced electronic music in one space. My own experiment in sound and culture.',
         deliverables: ['Full event concept', 'Visual direction', 'Experiential design', 'All promotional media'],
         projectBrief: {
-          challenge: 'Creating and marketing an experimental solo jungle rave on a minimal budget.',
-          solution: 'Designed an organic-tech aesthetic blending deep green jungle imagery with digital wiring diagrams.'
+          challenge: 'Create and promote my own jungle techno event on a tiny budget.',
+          solution: 'An organic-meets-tech look: deep jungle greens crossed with wiring diagrams.'
         },
         themeClass: 'theme-forest-green',
         img: 'Floating project icons jpg/TechVatika.jpg',
       
         gallery: [
           {
-            label: 'TechVatika Carousel 1',
+            label: 'Carousel 01',
             images: [
               'project_creatives/techvatika/techvatika carousel 1/techvatika carousel 1 page 1.jpg',
               'project_creatives/techvatika/techvatika carousel 1/techvatika carousel 1 page 2.jpg',
@@ -4515,7 +4657,7 @@
             ]
           },
           {
-            label: 'TechVatika Carousel 2',
+            label: 'Carousel 02',
             images: [
               'project_creatives/techvatika/techvatika carousel 2/techvatika carousel 2 page 1.jpg',
               'project_creatives/techvatika/techvatika carousel 2/techvatika carousel 2 page 2.jpg'
@@ -4530,38 +4672,38 @@
         client: 'The Project Cafe Ahmedabad',
         year: '2025',
         tags: ['Cafe Branding', 'Social Strategy', 'Creative Design'],
-        description: 'A beloved lifestyle cafe in Ahmedabad. Continental and Italian food, great events, and the kind of place people keep coming back to.',
+        description: 'A much-loved lifestyle café in Ahmedabad. Continental and Italian food, great events, and the kind of place people keep coming back to.',
         deliverables: ['Social media design and creative strategy across a multi-month engagement'],
         projectBrief: {
-          challenge: 'Maintain a premium, aesthetics-focused social media narrative that appeals to an artistic urban crowd.',
-          solution: 'Used a clean design system with emerald accents, editorial layouts, and high-quality photography guides.'
+          challenge: 'Keep a premium, aesthetic feed for an artsy city crowd, month after month.',
+          solution: 'A clean design system with emerald accents, editorial layouts and clear photo guidelines.'
         },
         themeClass: 'theme-emerald-teal',
         img: 'Floating project icons jpg/The Project Cafe.jpg',
       
         gallery: [
         {
-          label: 'Tpc',
+          label: 'Carousel 01',
           images: ['project_creatives/the-project-cafe/tpc creatives/tpc/tpc carousel 1 page 1.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc/tpc carousel 1 page 2.jpg']
         },
         {
-          label: 'Tpc (1)',
+          label: 'Carousel 02',
           images: ['project_creatives/the-project-cafe/tpc creatives/tpc (1)/tpc carousel 2 page 1.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (1)/tpc carousel 2 page 2.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (1)/tpc carousel 2 page 3.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (1)/tpc carousel 2 page 4.jpg']
         },
         {
-          label: 'Tpc (2)',
+          label: 'Carousel 03',
           images: ['project_creatives/the-project-cafe/tpc creatives/tpc (2)/tpc carousel 3 page 1.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (2)/tpc carousel 3 page 2.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (2)/tpc carousel 3 page 3.jpg']
         },
         {
-          label: 'Tpc (3)',
+          label: 'Carousel 04',
           images: ['project_creatives/the-project-cafe/tpc creatives/tpc (3)/tpc carousel 4 page 1.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (3)/tpc carousel 4 page 2.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (3)/tpc carousel 4 page 3.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (3)/tpc carousel 4 page 4.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (3)/tpc carousel 4 page 5.jpg']
         },
         {
-          label: 'Tpc (4)',
+          label: 'Carousel 05',
           images: ['project_creatives/the-project-cafe/tpc creatives/tpc (4)/tpc carousel 5 page 1.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (4)/tpc carousel 5 page 2.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (4)/tpc carousel 5 page 3.jpg']
         },
         {
-          label: 'Tpc (5)',
+          label: 'Carousel 06',
           images: ['project_creatives/the-project-cafe/tpc creatives/tpc (5)/tpc carousel 6 page 1.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (5)/tpc carousel 6 page 2.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (5)/tpc carousel 6 page 3.jpg', 'project_creatives/the-project-cafe/tpc creatives/tpc (5)/tpc carousel 6 page 4.jpg']
         }
       ],
@@ -4573,15 +4715,15 @@
         client: 'Selected Projects',
         year: '2025–2026',
         tags: ['UI/UX Design', 'Product Architecture', 'Dashboard Systems', 'Mobile & Web UI'],
-        description: 'A curated showcase of digital user interfaces, complex dashboard systems, and web application architectures designed with a focus on intuitive user flows, visual hierarchy, and polished product aesthetics.',
+        description: 'Screens I\'ve designed: dashboards, web apps and mobile flows. The goal is always the same. Make the complicated stuff feel easy.',
         deliverables: [
           'Interface architecture & user flow mapping',
           'High-fidelity web & mobile application UI design',
           'Design systems, modular dashboard components, and interactive prototypes'
         ],
         projectBrief: {
-          challenge: 'Simplifying complex data structures, enterprise workflows, and multi-step user journeys into intuitive, elegant digital interfaces.',
-          solution: 'Designed modular UI component systems with clean typographic hierarchy, responsive layouts, and refined visual interactions.'
+          challenge: 'Turn complex data and multi-step workflows into interfaces people get on the first try.',
+          solution: 'Modular components, clear type hierarchy and layouts that work on every screen size.'
         },
         themeClass: 'theme-royal-blue',
         img: 'Floating project icons jpg/UI UX.jpg',
@@ -4600,11 +4742,11 @@
         client: 'WHIM Clothing',
         year: '2026',
         tags: ['E-commerce UI', 'User Journey', 'Fashion Brand'],
-        description: 'An upscale fashion brand that needed its digital storefront to feel as premium as the clothes inside it.',
+        description: 'An upscale fashion brand that needed its online store to feel as premium as the clothes inside it.',
         deliverables: ['Complete e-commerce ui design with luxury focused layouts and user journey'],
         projectBrief: {
-          challenge: 'Design an online storefront that replicates the premium, high-fashion feeling of an physical boutique.',
-          solution: 'Engineered a minimalist UI focusing on generous whitespace, elegant serif titles, and smooth transitions.'
+          challenge: 'Make shopping online feel like walking into a high-end boutique.',
+          solution: 'Minimal UI, lots of white space, elegant serif titles and smooth transitions.'
         },
         themeClass: 'theme-luxury-gold',
         img: 'Floating project icons jpg/WHIM.jpg',
@@ -4617,17 +4759,17 @@
       ],
       },
       'go-goa-gone': {
-        title: 'go goa gone',
+        title: 'Go Goa Gone',
         subtitle: 'Psytrance Festival',
         role: 'Graphic & Print Designer',
         client: 'Go Goa Gone Festival',
         year: '2025',
         tags: ['Festival Identity', 'Print', 'Digital Art'],
-        description: 'A psytrance festival in the Himachal mountains carrying the spiritual weight of Rishikesh and the chaotic joy of a good dancefloor. Two worlds, one identity.',
+        description: 'Psytrance in the Himachal mountains, with Rishikesh\'s spiritual side and the chaotic joy of a good dancefloor. Two moods, one identity.',
         deliverables: ['Full festival identity and all digital and print event creatives'],
         projectBrief: {
-          challenge: 'Establish a festival identity that brings together Rishikesh spiritual elements and heavy psytrance dance elements.',
-          solution: 'Designed high-frequency color layouts and posters combining mandala geometry with digital noise overlays.'
+          challenge: 'One identity for both the spiritual side and the heavy dancefloor side.',
+          solution: 'Mandala geometry with digital noise, in loud, high-frequency colours.'
         },
         themeClass: 'theme-emerald-teal',
         img: 'Floating project icons jpg/go goa gone.jpg',
@@ -4646,7 +4788,7 @@
         client: 'Qila Ritual • Strcture Mandawa • Funtroo • Sandstorm',
         year: '2025 – 2026',
         tags: ['Video Editing', 'Short Form Reels', 'Cinematic Teasers', 'Sound Sync'],
-        description: 'A curated showcase of high-impact commercial reels, festival aftermovies, and cinematic event teasers. Featuring rapid beat-synchronized pacing, customized sound design, atmospheric color grading, and tailored delivery across 9:16 vertical and 16:9 widescreen formats.',
+        description: 'Reels, aftermovies and event teasers. Cut on the beat, with sound design and colour grading, for both 9:16 and 16:9.',
         deliverables: [
           'Vertical Short-Form Reels (9:16)',
           'Cinematic Event Teasers & Aftermovies (16:9)',
@@ -4655,8 +4797,8 @@
           'Color Grading & Atmospheric Finishing'
         ],
         projectBrief: {
-          challenge: 'Creating compelling visual narratives that immediately hook viewers within seconds across both vertical social feeds (Reels/Shorts) and widescreen cinema presentations.',
-          solution: 'Combined rhythmic micro-beat editing, custom soundscapes, glitch and texture overlays, and high-impact color grading calibrated for mobile and desktop screens.'
+          challenge: 'Hook people in the first two seconds, on a phone feed or a big screen.',
+          solution: 'Beat-synced cuts, custom sound design, texture and glitch overlays, and colour grades tuned for mobile and desktop.'
         },
         themeClass: 'theme-minimal-dark',
         img: 'Floating project icons jpg/Video Edits.jpg',
@@ -4846,7 +4988,7 @@
       { id: 'perfcount', title: 'Perfcount', img: 'Floating project icons jpg/Perfcount.jpg', aspect: '1:1', defaultLeft: 21.5, defaultTop: 18.0 },
       { id: 'pickleball-x-techno', title: 'Pickleball x Techno', img: 'Floating project icons jpg/Pickleball x Techno.jpg', aspect: '4:5', defaultLeft: 56.5, defaultTop: 14.5 },
       { id: 'plugcast', title: 'PlugCast', img: 'Floating project icons jpg/PlugCast.jpg', aspect: '4:5', defaultLeft: 50.3, defaultTop: 7.0 },
-      { id: 'potography', title: 'Potography', img: 'Floating project icons jpg/Potography.jpg', aspect: '4:5', defaultLeft: 62.7, defaultTop: 60.0 },
+      { id: 'potography', title: 'Photography', img: 'Floating project icons jpg/Potography.jpg', aspect: '4:5', defaultLeft: 62.7, defaultTop: 60.0 },
       { id: 'psy-culture-india', title: 'Psy Culture India', img: 'Floating project icons jpg/Psy Culture India.jpg', aspect: '1:1', defaultLeft: 27.5, defaultTop: 48.0 },
       { id: 'qila-ritual-2', title: 'Qila Ritual 2', img: 'Floating project icons jpg/Qila Ritual 2.jpg', aspect: '4:5', defaultLeft: 43.5, defaultTop: 9.0 },
       { id: 'qila-ritual', title: 'Qila Ritual', img: 'Floating project icons jpg/Qila Ritual.jpg', aspect: '4:5', defaultLeft: 48.0, defaultTop: 22.0 },
@@ -4859,7 +5001,7 @@
       { id: 'the-project-cafe', title: 'The Project Cafe', img: 'Floating project icons jpg/The Project Cafe.jpg', aspect: '1:1', defaultLeft: 26.5, defaultTop: 61.5 },
       { id: 'ui-ux', title: 'UI UX', img: 'Floating project icons jpg/UI UX.jpg', aspect: '1:1', defaultLeft: 19.3, defaultTop: 59.0 },
       { id: 'whim', title: 'WHIM', img: 'Floating project icons jpg/WHIM.jpg', aspect: '1:1', defaultLeft: 11.1, defaultTop: 51.5 },
-      { id: 'go-goa-gone', title: 'go goa gone', img: 'Floating project icons jpg/go goa gone.jpg', aspect: '4:5', defaultLeft: 58.0, defaultTop: 32.0 },
+      { id: 'go-goa-gone', title: 'Go Goa Gone', img: 'Floating project icons jpg/go goa gone.jpg', aspect: '4:5', defaultLeft: 58.0, defaultTop: 32.0 },
       { id: 'video-edits', title: 'Video Edits', img: 'Floating project icons jpg/Video Edits.jpg', aspect: '1:1', defaultLeft: 15.1, defaultTop: 37.0 },
       { id: 'black-forest', title: 'Black Forest', img: 'Floating project icons jpg/Black Forest.jpg', aspect: '4:5', defaultLeft: 49.0, defaultTop: 65.0 },
       { id: 'revelation-day', title: 'Revelation Day', img: 'Floating project icons jpg/Revelation Day.jpg', aspect: '4:5', defaultLeft: 53.7, defaultTop: 49.5 },
@@ -4872,6 +5014,25 @@
     // ----------------------------------------------------
     // INITIALIZATION & BOOT LOADER                         
     // ----------------------------------------------------
+    // The boot screen reads like a designer's checklist, in order, ending on "Ready".
+    function runBootLines() {
+      const el = document.getElementById('boot-quote-text');
+      if (!el) return;
+      const count = (typeof badgesConfig !== 'undefined' && badgesConfig.length) ? badgesConfig.length : 40;
+      const lines = [
+        `Loading ${count} projects…`,
+        'Kerning every headline…',
+        'Making the logo bigger, as requested…',
+        'Ready. Come on in.'
+      ];
+      lines.forEach((line, i) => {
+        setTimeout(() => {
+          el.style.opacity = '0';
+          setTimeout(() => { el.textContent = line; el.style.opacity = '1'; }, 120);
+        }, i * 480);
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       // Start system clock
       updateClock();
@@ -4881,6 +5042,7 @@
       const progressFill = document.getElementById('boot-progress');
       const bootScreen = document.getElementById('boot-screen');
       const portrait = document.getElementById('bg-portrait');
+      runBootLines();
       
       setTimeout(() => {
         progressFill.style.width = '100%';
@@ -4902,6 +5064,18 @@
 
       // Initialize Dock Interaction
       setupDock();
+
+      // Let visitors move the sticky note around, like a real one
+      const sticky = document.getElementById('desktop-sticky');
+      if (sticky) {
+        placeStickyNote(sticky);
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(() => { if (!sticky.dataset.moved) placeStickyNote(sticky); });
+        }
+        makeDraggable(sticky);
+        sticky.addEventListener('mousedown', () => { sticky.dataset.moved = '1'; });
+        window.addEventListener('resize', () => { if (!sticky.dataset.moved) placeStickyNote(sticky); });
+      }
 
       // Global window focus and blur click handler
       document.addEventListener('mousedown', (e) => {
@@ -5230,12 +5404,221 @@
     // ----------------------------------------------------
     // DOCK DYNAMICS & MAGNIFICATION                        
     // ----------------------------------------------------
+    // ----------------------------------------------------
+    // MACOS MOTION HELPERS (desktop only, off for "Reduce Motion")
+    // ----------------------------------------------------
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const motionEnabled = () => !prefersReducedMotion.matches && window.innerWidth > 768;
+
+    // Builds a CSS linear() easing that follows a real spring, like macOS window motion.
+    function springEasing(damping = 0.78, stiffness = 14, samples = 48) {
+      const omega = stiffness;
+      const zeta = damping;
+      const wd = omega * Math.sqrt(1 - zeta * zeta);
+      const points = [];
+      for (let i = 0; i <= samples; i++) {
+        const t = i / samples;
+        const x = 1 - Math.exp(-zeta * omega * t) * (Math.cos(wd * t) + (zeta * omega / wd) * Math.sin(wd * t));
+        points.push(i === samples ? 1 : +x.toFixed(4));
+      }
+      return `linear(${points.join(', ')})`;
+    }
+    const SPRING = springEasing();
+    const SPRING_FALLBACK = 'cubic-bezier(0.2, 0.9, 0.25, 1.05)';
+
+    // Runs one motion at a time per window; starting a new one stops the previous.
+    function runMotion(el, keyframes, options) {
+      if (el._motion) {
+        el._motion.onfinish = null;
+        el._motion.cancel();
+      }
+      let anim;
+      try {
+        anim = el.animate(keyframes, options);
+      } catch (e) {
+        anim = el.animate(keyframes, { ...options, easing: SPRING_FALLBACK });
+      }
+      el._motion = anim;
+      anim.addEventListener('finish', () => { if (el._motion === anim) el._motion = null; });
+      return anim;
+    }
+
+    function animateWithSpring(el, keyframes, duration) {
+      return runMotion(el, keyframes, { duration, easing: SPRING });
+    }
+
+    // Remember which icon was clicked, so its window can grow out of it.
+    let lastLaunchRect = null;
+    document.addEventListener('pointerdown', (e) => {
+      const source = e.target.closest && e.target.closest('.project-badge, .dock-item');
+      if (source) lastLaunchRect = source.getBoundingClientRect();
+    }, true);
+
+    function rectCenter(r) {
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+
+    // Window grows out of the icon it was opened from.
+    function animateWindowOpen(win) {
+      if (!motionEnabled() || !lastLaunchRect) return;
+      const from = lastLaunchRect;
+      win.dataset.originRect = JSON.stringify({ left: from.left, top: from.top, width: from.width, height: from.height });
+      lastLaunchRect = null;
+      // Wait until the caller has finished placing the window, but run before the next paint.
+      queueMicrotask(() => {
+        const to = win.getBoundingClientRect();
+        if (!to.width) return;
+        const a = rectCenter(from), b = rectCenter(to);
+        const scale = Math.max(0.06, Math.min(from.width / to.width, from.height / to.height));
+        win.style.animation = 'none';
+        animateWithSpring(win, [
+          { transform: `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${scale})`, opacity: 0.35 },
+          { transform: 'translate(0, 0) scale(1)', opacity: 1 }
+        ], 560);
+      });
+    }
+
+    function dockTargetRect() {
+      const dock = document.getElementById('mac-dock');
+      return dock ? dock.getBoundingClientRect() : null;
+    }
+
+    // Window shrinks back into its icon (or toward the dock) and fades.
+    function animateWindowClose(win, done) {
+      if (!motionEnabled()) { done(); return; }
+      const to = win.getBoundingClientRect();
+      let target = null;
+      try { target = win.dataset.originRect ? JSON.parse(win.dataset.originRect) : null; } catch (e) {}
+      let keyframes;
+      if (target) {
+        const a = rectCenter(target), b = rectCenter(to);
+        const scale = Math.max(0.06, Math.min(target.width / to.width, target.height / to.height));
+        keyframes = [
+          { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+          { transform: `translate(${a.x - b.x}px, ${a.y - b.y}px) scale(${scale})`, opacity: 0 }
+        ];
+      } else {
+        keyframes = [
+          { transform: 'scale(1)', opacity: 1 },
+          { transform: 'scale(0.9)', opacity: 0 }
+        ];
+      }
+      win.style.animation = 'none';
+      win.style.pointerEvents = 'none';
+      const anim = runMotion(win, keyframes, { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.7, 0.2)', fill: 'forwards' });
+      anim.onfinish = done;
+    }
+
+    // Minimise: the window narrows and pours down into the dock (a light "genie" effect).
+    function animateWindowMinimize(win, done) {
+      const dock = dockTargetRect();
+      if (!motionEnabled() || !dock) { done(); return; }
+      const r = win.getBoundingClientRect();
+      const dx = (dock.left + dock.width / 2) - (r.left + r.width / 2);
+      const dy = dock.top + dock.height / 2 - (r.top + r.height / 2);
+      win.style.animation = 'none';
+      win.style.pointerEvents = 'none';
+      const anim = runMotion(win, [
+        { transform: 'translate(0, 0) scale(1, 1)', opacity: 1, offset: 0 },
+        { transform: `translate(${dx * 0.35}px, ${dy * 0.25}px) scale(0.55, 0.85)`, opacity: 1, offset: 0.45 },
+        { transform: `translate(${dx}px, ${dy}px) scale(0.04, 0.08)`, opacity: 0.2, offset: 1 }
+      ], { duration: 520, easing: 'cubic-bezier(0.55, 0, 0.75, 0.3)', fill: 'forwards' });
+      anim.onfinish = () => {
+        win.style.visibility = 'hidden';
+        win.style.pointerEvents = '';
+        done();
+        anim.cancel();
+      };
+    }
+
+    function animateWindowRestore(win) {
+      win.style.visibility = '';
+      win.style.pointerEvents = '';
+      const dock = dockTargetRect();
+      if (!motionEnabled() || !dock) return;
+      const r = win.getBoundingClientRect();
+      const dx = (dock.left + dock.width / 2) - (r.left + r.width / 2);
+      const dy = dock.top + dock.height / 2 - (r.top + r.height / 2);
+      animateWithSpring(win, [
+        { transform: `translate(${dx}px, ${dy}px) scale(0.04, 0.08)`, opacity: 0.2 },
+        { transform: `translate(${dx * 0.35}px, ${dy * 0.25}px) scale(0.55, 0.85)`, opacity: 1, offset: 0.4 },
+        { transform: 'translate(0, 0) scale(1, 1)', opacity: 1 }
+      ], 600);
+    }
+
+    // Dock magnification: icons swell smoothly as the pointer glides over them.
     function setupDock() {
-      // Dock is completely static now. Tooltips and hovers are handled purely in CSS.
+      const dock = document.getElementById('mac-dock');
+      if (!dock) return;
+      const items = [...dock.querySelectorAll('.dock-item')];
+      const BASE = 48, MAX = 76, RANGE = 150;
+      let frame = null;
+
+      const reset = () => {
+        dock.classList.remove('magnifying');
+        items.forEach(item => { item.style.width = ''; item.style.height = ''; });
+      };
+
+      dock.addEventListener('mousemove', (e) => {
+        if (!motionEnabled()) return;
+        const x = e.clientX;
+        if (frame) cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          dock.classList.add('magnifying');
+          items.forEach(item => {
+            const r = item.getBoundingClientRect();
+            const d = Math.abs(x - (r.left + r.width / 2));
+            const t = Math.max(0, 1 - d / RANGE);
+            const size = BASE + (MAX - BASE) * (0.5 - 0.5 * Math.cos(Math.PI * t));
+            item.style.width = `${size}px`;
+            item.style.height = `${size}px`;
+          });
+        });
+      });
+      dock.addEventListener('mouseleave', () => {
+        if (frame) cancelAnimationFrame(frame);
+        reset();
+      });
+      window.addEventListener('resize', reset);
+    }
+
+    // Puts the sticky note in the first corner of the desktop where it doesn't cover a project or the dock.
+    function placeStickyNote(sticky) {
+      if (window.innerWidth <= 768) return;
+      const w = sticky.offsetWidth, h = sticky.offsetHeight;
+      const W = window.innerWidth, H = window.innerHeight;
+      const m = 28;
+      const obstacles = [...document.querySelectorAll('.project-badge, .dock-container, .desktop-controls')]
+        .map(el => el.getBoundingClientRect())
+        .filter(r => r.width && r.height);
+      const candidates = [
+        [m, 56], [m, H - h - m], [W - w - m, 56], [W - w - m, H - h - m],
+        [m, (H - h) / 2], [W - w - m, (H - h) / 2]
+      ];
+      const pad = 10;
+      const overlapArea = (x, y) => obstacles.reduce((sum, r) => {
+        const ox = Math.max(0, Math.min(x + w + pad, r.right) - Math.max(x - pad, r.left));
+        const oy = Math.max(0, Math.min(y + h + pad, r.bottom) - Math.max(y - pad, r.top));
+        return sum + ox * oy;
+      }, 0);
+      let best = candidates[0], bestArea = Infinity;
+      for (const [x, y] of candidates) {
+        const a = overlapArea(x, y);
+        if (a < bestArea) { best = [x, y]; bestArea = a; }
+        if (a === 0) break;
+      }
+      sticky.style.left = `${Math.round(best[0])}px`;
+      sticky.style.top = `${Math.round(best[1])}px`;
     }
 
     function launchApp(element, callback) {
-      element.classList.add('running'); // indicator light on
+      // The running dot is set by createBaseWindow when the app's window opens
+      if (motionEnabled() && element.classList.contains('dock-item')) {
+        element.classList.remove('bouncing');
+        void element.offsetWidth; // restart the bounce if clicked again
+        element.classList.add('bouncing');
+        setTimeout(() => element.classList.remove('bouncing'), 800);
+      }
       callback();
     }
 
@@ -5372,8 +5755,12 @@
       // Check if already open
       if (activeWindows[id]) {
         const win = activeWindows[id];
+        const midMinimize = !!(win._motion && win.style.pointerEvents === 'none');
+        const wasMinimized = win.classList.contains('minimized') || win.style.visibility === 'hidden' || midMinimize;
         win.classList.remove('minimized');
         bringToFront(win);
+        if (wasMinimized) animateWindowRestore(win);
+        lastLaunchRect = null;
         return win;
       }
 
@@ -5408,6 +5795,7 @@
       updateBackgroundState();
       
       makeDraggable(winEl, '.window-header');
+      animateWindowOpen(winEl);
       
       winEl.addEventListener('mousedown', () => {
         bringToFront(winEl);
@@ -5426,14 +5814,10 @@
         win.querySelectorAll('iframe').forEach(f => {
           f.src = '';
         });
-        win.style.transform = 'scale(0.85)';
-        win.style.opacity = '0';
         delete activeWindows[id];
         if (id === 'video-edits') videoEditsPlayers = [];
         updateBackgroundState();
-        setTimeout(() => {
-          win.remove();
-        }, 180);
+        animateWindowClose(win, () => win.remove());
       }
       
       // Update Dock icon light
@@ -5444,7 +5828,7 @@
     function minimizeWindow(id) {
       const win = activeWindows[id];
       if (win) {
-        win.classList.add('minimized');
+        animateWindowMinimize(win, () => win.classList.add('minimized'));
       }
     }
 
@@ -5462,8 +5846,7 @@
       const data = projects[projectId];
       if (!data) return;
 
-      const isDockProject = projectId === 'efemmera' || projectId === 'newonce' || projectId === 'interludium';
-      let windowTitle = isDockProject ? data.subtitle : data.title;
+      let windowTitle = data.title;
       if (window.innerWidth <= 768) {
         windowTitle = `Information about: ${windowTitle}`;
       }
@@ -6031,16 +6414,16 @@
 
       if (type === 'close') {
         title = 'System Warning';
-        text = "You can simply close the tab in your browser if you're done looking at my work.";
-        btnText = 'fair enough';
+        text = "Leaving already? The best project is literally one click away.";
+        btnText = "fine, I'll stay";
       } else if (type === 'minimize') {
         title = 'System Notice';
-        text = "Out of sight, out of mind. Minimizing your problems since 2024.";
-        btnText = 'hide it';
+        text = "Minimising my work? Bold. My mom says it's great.";
+        btnText = "she's right";
       } else if (type === 'maximize') {
         title = 'Display Alert';
-        text = "Full screen mode activated. More pixels for your procrastination.";
-        btnText = 'got it';
+        text = "Full screen? Ah, a classic 'make the logo bigger' person.";
+        btnText = 'guilty';
       }
 
       if (document.getElementById(`window-${popupId}`)) return;
@@ -6075,17 +6458,20 @@
       let btnText = 'This is too much';
 
       if (type === 'photoshop') {
+        btnText = 'let them go';
         title = 'Adobe Photoshop';
         iconPath = 'bottom_deck_icons/adobe photoshop.svg';
-        text = "Scratch disks full! But hey, at least you have 47 unused layers named 'Layer 1 copy copy final_v2' to keep you company.";
+        text = "Photoshop quit unexpectedly. Your 47 layers named 'Layer 1 copy' are finally free.";
       } else if (type === 'illustrator') {
         title = 'Adobe Illustrator';
         iconPath = 'bottom_deck_icons/Adobe illus.svg';
-        text = "Illustrator ran out of memory after you tried to expand 10,000 anchor points at once. Take a coffee break while it thinks about what it did.";
+        text = "The Pen tool is on strike. Demands: fewer anchor points, more respect.";
+        btnText = 'support the union';
       } else if (type === 'indesign') {
         title = 'Adobe InDesign';
         iconPath = 'bottom_deck_icons/Adobe indesign.svg';
-        text = "Overset text detected on page 4 by 0.001mm! Your typography was simply too powerful for this frame. Package your file before exiting!";
+        text = "Overset text detected. The client wrote a novel for a poster.";
+        btnText = 'send it back';
       }
 
       const win = createBaseWindow(type, title);
@@ -6137,29 +6523,31 @@
       'profile': `
         <div class="note-article">
           <h2 class="note-title">Abhijeet Singh Rathore</h2>
-          <p class="note-subtitle">Visual Designer & Brand Manager | Creative Direction & Brand Identity Systems</p>
+          <p class="note-subtitle">Visual Designer | Brand Identity, Campaigns, Social Media & UI/UX</p>
           
           <div class="note-section">
-            <h3>Executive Summary</h3>
-            <p>Multi-disciplinary Visual Designer and Brand Manager with 5+ years of experience leading high-impact brand identities, visual design systems, and digital campaigns. Bridging the gap between creative visual artistry and business strategy with a dual academic foundation in Computer Applications (BCA) and Business Administration (MBA).</p>
-            <p>Specialized in taking brands from concept to culture—building distinct visual identities, comprehensive brand guidelines, dynamic event collaterals, and high-engagement social media campaigns. Proven track record managing creative direction for marquee entertainment and culture brands, as well as leading brand visual experience across enterprise tech environments.</p>
+            <h3>Summary</h3>
+            <p>Visual designer with 5+ years in design: brand identities, festival and event campaigns, social media creative, and UI/UX. I design for India's electronic music and nightlife culture (Alarm of Dome, Qila Ritual, TechVatika, Rave Culture India, Psy Culture India) and run my own studio, Kalacurry. Before that, I spent almost three years as a UI/UX designer on software products at Sukratu and Knovos.</p>
+            <p>My path into design is a little unusual. It started with a childhood love of painting, then two years backstage in event production in Pune, working with artists, lighting and sound. During the 2020 lockdown I went back to painting and taught myself Photoshop and Illustrator, which led me to Adobe and then into design full time. Because of that, I design for the real room and the real crowd, not just the screen.</p>
           </div>
           
           <div class="note-section">
-            <h3>Core Competencies</h3>
+            <h3>What I Do</h3>
             <ul>
-              <li><strong>Brand Identity & Systems:</strong> 0-to-1 brand creation, custom typography systems, color strategy, and comprehensive brand books.</li>
-              <li><strong>Visual Design & Art Direction:</strong> High-impact key visuals, print & outdoor collaterals, festival scenography, and digital assets.</li>
-              <li><strong>Brand Management & Social Strategy:</strong> Multi-channel creative direction, visual consistency, community growth, and audience engagement.</li>
-              <li><strong>Dynamic Brand Assets:</strong> Curated teaser videos, kinetic flyers, and high-converting launch media.</li>
+              <li><strong>Brand Identity:</strong> logos, typography, colour systems and brand guidelines, from first idea to full rollout.</li>
+              <li><strong>Event & Festival Design:</strong> key visuals, lineup reveals, posters, stage visuals, hoardings and merch.</li>
+              <li><strong>Social Media Design:</strong> carousels, launch campaigns and consistent visual systems for pages with 1–2.5 lakh followers.</li>
+              <li><strong>UI/UX Design:</strong> web and app interfaces and design systems in Figma.</li>
+              <li><strong>Motion & Video:</strong> teasers, reels and aftermovies edited in Premiere Pro.</li>
             </ul>
           </div>
           
           <div class="note-highlights">
-            <div class="highlight-badge">🎨 Brand Identity & Guidelines</div>
-            <div class="highlight-badge">⚡ Visual Design & Art Direction</div>
-            <div class="highlight-badge">🚀 Brand Management & Campaigns</div>
-            <div class="highlight-badge">🎬 Dynamic Brand Storytelling</div>
+            <div class="highlight-badge">Brand Identity</div>
+            <div class="highlight-badge">Event & Festival Design</div>
+            <div class="highlight-badge">Social Media Design</div>
+            <div class="highlight-badge">UI/UX</div>
+            <div class="highlight-badge">Video Editing</div>
           </div>
         </div>
       `,
@@ -6221,67 +6609,65 @@
       'experience': `
         <div class="note-article">
           <h2 class="note-title">Professional Experience</h2>
-          <p class="note-subtitle">Track Record of Creative Leadership & Brand Building</p>
+          <p class="note-subtitle">From event production to design</p>
           
           <div class="timeline-item">
             <div class="timeline-header">
-              <span class="role-title">Founder & Creative Director | Brand Manager</span>
+              <span class="role-title">Founder & Creative Director</span>
               <span class="company-name">KALACURRY STUDIO / FREELANCE</span>
               <span class="date-badge">Mar 2024 – Present</span>
             </div>
             <ul class="timeline-body">
-              <li>Direct end-to-end brand identity design, visual guidelines, and campaign creative direction for 15+ lifestyle, entertainment, and hospitality brands.</li>
-              <li>Oversee brand management and social media visual strategy for prominent electronic music culture platforms (<em>Rave Culture India, Psy Culture India, Party Plug</em>), driving visual consistency and organic audience engagement.</li>
-              <li>Conceived and executed the complete visual ecosystem for major cultural and music events (<em>Techvatika, Qila Ritual, After Casa, Strcture Mandawa</em>), spanning stage visual identity, outdoor hoardings, dynamic flyers, and promotional teaser videos.</li>
-              <li>Manage client relationships, brand positioning, and cross-functional creative production from initial moodboards to final print and digital rollout.</li>
+              <li>Design brand identities, guidelines and campaigns for 15+ lifestyle, entertainment and hospitality brands.</li>
+              <li>Lead visual design for some of India's biggest electronic music pages, including <em>Rave Culture India</em> (2.5 lakh+ Instagram followers), <em>Psy Culture India</em> and <em>Party Plug</em>, keeping every post on-brand.</li>
+              <li>Create the full visual world for music and cultural events (<em>Alarm of Dome, Qila Ritual, TechVatika, After Casa, Strcture Mandawa</em>): key visuals, lineup reveals, stage visuals, hoardings, flyers and teaser videos.</li>
+              <li>Handle clients end to end, from moodboards to final print and digital delivery.</li>
             </ul>
           </div>
 
           <div class="timeline-item">
             <div class="timeline-header">
-              <span class="role-title">Visual Designer & Brand Experience (UI/UX & Brand Media)</span>
-              <span class="company-name">KNOVOS & SUKRATU</span>
-              <span class="date-badge">Mar 2021 – Mar 2024 | Gandhinagar & Pune</span>
+              <span class="role-title">UX/UI Designer</span>
+              <span class="company-name">KNOVOS</span>
+              <span class="date-badge">Jan 2022 – Mar 2024</span>
             </div>
             <ul class="timeline-body">
-              <li>Owned digital brand identity, marketing collaterals, and social media creative presence for enterprise B2B software products.</li>
-              <li>Collaborated closely with marketing and leadership teams to translate complex technical capabilities into clean, visually engaging brand assets, decks, and multi-channel campaigns.</li>
-              <li>Redesigned the visual interface and design system for enterprise platform <em>Knovos Manage</em>, yielding a 15% increase in active user engagement.</li>
-              <li>Crafted digital visual touchpoints, brand marketing assets, and promotional materials for client accounts including Dental Dost and Human Cloud.</li>
+              <li>Redesigned the interface and design system for the enterprise platform <em>Knovos Manage</em>, leading to a 15% increase in active user engagement.</li>
+              <li>Designed product screens, marketing assets and decks that turned complex software features into clear, simple visuals.</li>
             </ul>
           </div>
 
           <div class="timeline-item">
             <div class="timeline-header">
-              <span class="role-title">Customer Support & Creative Suite Specialist</span>
+              <span class="role-title">UI Designer</span>
+              <span class="company-name">SUKRATU</span>
+              <span class="date-badge">Jun 2021 – Dec 2021</span>
+            </div>
+            <ul class="timeline-body">
+              <li>First design role: designed app and web interfaces and marketing visuals for client products including <em>Dental Dost</em> and <em>Human Cloud</em>.</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-header">
+              <span class="role-title">Customer Support Engineer</span>
               <span class="company-name">ADOBE</span>
               <span class="date-badge">Jul 2020 – Feb 2021 | Jaipur</span>
             </div>
             <ul class="timeline-body">
-              <li>Provided technical troubleshooting and workflow support for Adobe Creative Cloud applications, mastering professional digital imaging, vector workflows, and prepress asset delivery.</li>
-              <li>Deepened technical mastery over color management, typography rendering, and digital production pipelines across Photoshop and Illustrator.</li>
+              <li>Supported Creative Cloud users with Photoshop, Illustrator and other Adobe apps, building deep, hands-on knowledge of the tools.</li>
             </ul>
           </div>
 
           <div class="timeline-item">
             <div class="timeline-header">
-              <span class="role-title">Founder & Creative Brand Lead</span>
-              <span class="company-name">YUMMY VIBES CAFE</span>
-              <span class="date-badge">Jan 2020 – Jun 2020 | Pune</span>
-            </div>
-            <ul class="timeline-body">
-              <li>Founded and designed the complete visual identity, interior signage, menu design, and brand collaterals for a modern culinary brand.</li>
-            </ul>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-header">
-              <span class="role-title">Event Production & Brand Activation Coordinator</span>
-              <span class="company-name">BACARDI / EVENT PRODUCTION HOUSES</span>
+              <span class="role-title">Event Manager</span>
+              <span class="company-name">BANDHAN EVENTS, MIRACLE EVENTS, BACARDI, IIFA & OTHERS</span>
               <span class="date-badge">2018 – Jan 2020 | Pune</span>
             </div>
             <ul class="timeline-body">
-              <li>Executed on-ground brand activations, artist hospitality, and promotional collateral deployment across large-scale commercial music festivals and hospitality events.</li>
+              <li>Managed artists and hospitality for music events and festivals.</li>
+              <li>Worked across production, lighting and sound, and ran on-ground brand activations, including for Bacardi.</li>
             </ul>
           </div>
         </div>
@@ -6303,7 +6689,7 @@
           <div class="timeline-item">
             <div class="timeline-header">
               <span class="role-title">Bachelor of Computer Applications (BCA)</span>
-              <span class="company-name">MDSU Ajmer, Rajasthan</span>
+              <span class="company-name">Aryan College (MDSU), Ajmer, Rajasthan</span>
               <span class="date-badge">2018</span>
             </div>
             <p style="margin: 4px 0 0 0; font-size: 13px; color: #515154;">Technical foundation in computing systems, interface architecture, and digital media technologies.</p>
@@ -6323,7 +6709,7 @@
               <li>📧 <strong>Email:</strong> rathore787785@gmail.com</li>
               <li>📞 <strong>Phone:</strong> +91 7014273744</li>
               <li>🔗 <strong>LinkedIn:</strong> linkedin.com/in/abhijeet-singh-rathore-6b7284176/</li>
-              <li>📷 <strong>Instagram:</strong> instagram.com/that.nonsane.guy/</li>
+              <li>📷 <strong>Instagram:</strong> instagram.com/kala_ko_aakar/</li>
             </ul>
           </div>
         </div>
@@ -6401,9 +6787,6 @@
               <h3 style="margin: 0; font-size: 17px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.3px;">Personal Photographs</h3>
               <span style="font-size: 12px; color: #86868b; font-weight: 500;">${myPhotographs.length} Curated Captures • Shot by Abhijeet</span>
             </div>
-            <span style="font-size: 11px; font-weight: 600; color: #007aff; background: rgba(0,122,255,0.08); padding: 4px 10px; border-radius: 12px;">
-              Click any photo to view full size
-            </span>
           </div>
           
           <div class="photos-masonry" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 10px; padding: 0;">
@@ -6500,7 +6883,7 @@
                 </span>
               </div>
               <p style="margin: 3px 0 0 0; font-size: 12px; color: #86868b; font-weight: 500;">
-                Visual Designer & Brand Manager • Founder @ Kalacurry
+                Visual Designer • Founder @ Kalacurry
               </p>
             </div>
           </div>
@@ -6570,7 +6953,7 @@
               <span>LinkedIn</span>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
             </a>
-            <a href="https://www.instagram.com/that.nonsane.guy/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #e1306c; background: #fdf0f4; padding: 5px 11px; border-radius: 6px;">
+            <a href="https://www.instagram.com/kala_ko_aakar/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #e1306c; background: #fdf0f4; padding: 5px 11px; border-radius: 6px;">
               <span>Instagram</span>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
             </a>
@@ -6666,6 +7049,73 @@
         seconds: 178
       }
     ];
+
+    // ----------------------------------------------------
+    // TRASH — rejected concepts. Add items here:
+    //   { img: 'trash/file.jpg', name: 'Qila Ritual poster v3.jpg', note: 'Too pretty for a techno night.' }
+    // ----------------------------------------------------
+    const trashItems = [];
+
+    function openTrash() {
+      const win = createBaseWindow('trash', 'Trash — Client said no');
+      win.style.width = '620px';
+      win.style.height = '480px';
+      win.style.maxHeight = '85vh';
+      const body = document.getElementById('window-body-trash');
+      body.style.padding = '0';
+      body.style.overflow = 'hidden';
+
+      const count = trashItems.length;
+      const content = count
+        ? `<div class="trash-grid">${trashItems.map((item, idx) => `
+            <div class="trash-item" onclick="openLightboxGallery(event, trashItems.map(t => t.img), ${idx})">
+              <img src="${item.img}" alt="${item.name}" loading="lazy">
+              <div class="trash-item-name">${item.name}</div>
+              ${item.note ? `<div class="trash-item-note">${item.note}</div>` : ''}
+            </div>`).join('')}
+          </div>`
+        : `<div class="trash-empty-state">
+            <img src="bottom_deck_icons/trash.svg" alt="">
+            <strong>Trash is empty.</strong>
+            <span>Every single idea got approved on the first try. (Yeah, we both know that's not how it works. The rejects are on their way.)</span>
+          </div>`;
+
+      body.innerHTML = `
+        <div class="trash-body">
+          <div class="trash-toolbar">
+            <div>
+              <div class="trash-toolbar-title">Client said no</div>
+              <div class="trash-toolbar-sub">${count ? `${count} rejected ${count === 1 ? 'idea' : 'ideas'}, kept for the memories` : 'Rejected concepts live here'}</div>
+            </div>
+            <button class="trash-empty-btn" onclick="emptyTrashJoke()">Empty Trash</button>
+          </div>
+          ${content}
+        </div>
+      `;
+      bringToFront(win);
+    }
+
+    function emptyTrashJoke() {
+      const popupId = 'trash-alert';
+      if (document.getElementById(`window-${popupId}`)) return;
+      const win = createBaseWindow(popupId, 'Finder');
+      win.className = 'mac-window adobe-alert-window';
+      const body = document.getElementById(`window-body-${popupId}`);
+      body.innerHTML = `
+        <div class="adobe-alert-body">
+          <div class="adobe-alert-icon">
+            <img src="bottom_deck_icons/trash.svg" alt="Trash">
+          </div>
+          <div class="adobe-alert-content">
+            <p class="adobe-alert-text">Can't empty the Trash. One of these might come back as 'final_v9'.</p>
+            <div class="adobe-alert-buttons">
+              <button class="adobe-alert-btn" onclick="closeWindow('${popupId}')">keep them</button>
+            </div>
+          </div>
+        </div>
+      `;
+      bringToFront(win);
+    }
 
     function openMusic() {
       const win = createBaseWindow('music', 'Music');
@@ -6907,6 +7357,7 @@
       bootScreen.style.display = 'flex';
       bootScreen.style.opacity = '1';
       progressFill.style.width = '0%';
+      runBootLines();
       
       setTimeout(() => {
         progressFill.style.width = '100%';

@@ -15,6 +15,8 @@ print(f"Created clean dist directory")
 
 items_to_copy = [
     "index.html",
+    "favicon.png",
+    "apple-touch-icon.png",
     "bg.jpg",
     "color bg2.jpg",
     "ALARM OF DOME BYOB.jpg",
